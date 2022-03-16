@@ -51,7 +51,7 @@ const config = {
         items: [
           {to: '/', label: 'Home', position: 'left'},
           {to: '/about', label: 'About Me', position: 'left'},
-          {to: '/projects', label: 'Projects', position: 'left'},
+          {to: '/about', label: 'Projects', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             type: 'doc',
@@ -81,7 +81,7 @@ const config = {
               },
               {
                 label: 'Projects',
-                to: '/projects',
+                to: '/about',
               },
               {
                 label: 'Blog',
