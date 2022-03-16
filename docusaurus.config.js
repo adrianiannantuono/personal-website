@@ -119,7 +119,7 @@ const config = {
               },
               {
                 label: 'LinkedIn',
-                href: 'https://linkedin.com/adrianiannantuono',
+                href: 'https://linkedin.com/in/adrianiannantuono',
               },
             ],
           },
