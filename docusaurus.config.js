@@ -13,8 +13,8 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'adrianiannantuono', // Usually your GitHub org/user name.
+  projectName: 'personal-website', // Usually your repo name.
 
   presets: [
     [
@@ -51,7 +51,7 @@ const config = {
         items: [
           {to: '/', label: 'Home', position: 'left'},
           {to: '/about', label: 'About Me', position: 'left'},
-          {to: '/projects', label: 'Projects', position: 'left'},
+          {to: '/about', label: 'Projects', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             type: 'doc',
@@ -81,7 +81,7 @@ const config = {
               },
               {
                 label: 'Projects',
-                to: '/projects',
+                to: '/about',
               },
               {
                 label: 'Blog',
