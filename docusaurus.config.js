@@ -7,12 +7,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Adrian Iannantuono',
-  tagline: 'Computer Engineering student who is always looking at new ways to solve problems.',
+  tagline: 'Computer Engineering student.',
   url: 'https://adrianiannantuono.ca',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'https://github.com/adrianiannantuono.png',
   organizationName: 'adrianiannantuono', // Usually your GitHub org/user name.
   projectName: 'personal-website', // Usually your repo name.
 
@@ -24,13 +24,13 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/adrianiannantuono/personal-website/tree/main',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/adrianiannantuono/personal-website/tree/main',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -46,10 +46,9 @@ const config = {
         title: 'Adrian Iannantuono',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          src: 'https://github.com/adrianiannantuono.png',
         },
         items: [
-          {to: '/', label: 'Home', position: 'left'},
           {to: '/about', label: 'About Me', position: 'left'},
           {to: '/about', label: 'Projects', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
