@@ -13,11 +13,17 @@
   background-size: cover;
   background-repeat: no-repeat;
   height: 60vh;
+  min-height: 550px;
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 2rem;
+  }
+}
+@media screen and (max-width: 600px) {
+  .mainImg {
+    width: 200px
   }
 }
 

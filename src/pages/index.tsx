@@ -19,7 +19,7 @@ function HomepageHeader() {
         <div className="row">
           <div className={clsx('col col--4')}>
             <div className="text--center">
-              <img src="https://github.com/adrianiannantuono.png" alt="Place image title"/>
+              <img className={styles.mainImg} src="https://github.com/adrianiannantuono.png" alt="Place image title"/>
             </div>
           </div>
           <div className={clsx('col col--8')}>
