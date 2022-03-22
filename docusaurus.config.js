@@ -42,6 +42,9 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        respectPrefersColorScheme: true,
+      },
       navbar: {
         title: 'Adrian Iannantuono',
         logo: {
@@ -50,7 +53,7 @@ const config = {
         },
         items: [
           {to: '/about', label: 'About Me', position: 'left'},
-          {to: '/about', label: 'Projects', position: 'left'},
+          {to: '/projects', label: 'Projects', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             type: 'doc',
@@ -80,7 +83,7 @@ const config = {
               },
               {
                 label: 'Projects',
-                to: '/about',
+                to: '/projects',
               },
               {
                 label: 'Blog',
