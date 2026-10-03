@@ -1,122 +1,25 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset = "utf-8">
-    <meta name = "description" content = "Description goes here">
-    <meta name = "keywords" content = "HTML, CSS, XML, JavaScript">
-    <meta name = "author" content = "Adrian Iannantuono">
-    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-
-    <title>Adrian Iannantuono</title>
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel = "stylesheet" type = "text/css" href = "css/style.css">
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Adrian Iannantuono — Software Engineer with experience building production SaaS and industrial systems."
+    />
+    <meta name="author" content="Adrian Iannantuono" />
+    <title>Adrian Iannantuono — Software Engineer</title>
+    <script>
+      try {
+        const stored = localStorage.getItem('theme')
+        const dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch {}
+    </script>
   </head>
-
-  <body id="content">
-    <div id="top-nav"></div>
-    <div class="home-main">
-      <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" data-pause="false" data-interval="9000">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-        </ol>
-        <div class="carousel-inner" style="height:100vh;width:100%;">
-          <div class="carousel-item active">
-            <img class="home-main-image" src="images/Screen Shot 2019-01-11 at 3.59.07 PM.png" alt="First slide">
-            <div class="carousel-caption">
-              <p class="image-location-text" style="font-size: 15px;">Banff, Canada</p>
-              <p class="image-location-text" style="font-size: 12px;">July 3, 2018</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="home-main-image" src="images/a (1 of 1)-6.jpeg" alt="Second slide">
-            <div class="carousel-caption">
-              <p class="image-location-text" style="font-size: 15px;">Pisa, Italy</p>
-              <p class="image-location-text" style="font-size: 12px;">August 10, 2017</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="home-main-image" src="images/a (1 of 6).jpg" alt="Third slide">
-            <div class="carousel-caption">
-              <p class="image-location-text" style="font-size: 15px;">Riomaggorre, Italy</p>
-              <p class="image-location-text" style="font-size: 12px;">June 6, 2019</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="home-main-image" src="images/ezgif.com-video-to-gif.gif" alt="Fourth slide">
-            <div class="carousel-caption">
-              <p class="image-location-text" style="font-size: 15px;">Phoenix, USA</p>
-              <p class="image-location-text" style="font-size: 12px;">Sept 14, 2016</p>
-            </div>
-          </div>
-        </div>
-        <div class="home-main-text">
-          <h2 style="opacity: 0.85;">Adrian Iannantuono</h2>
-          <h6 style="opacity: 0.5;">Programmer. Developer. Creator.</h6>
-          <br>
-          <button type="button" onclick="op_contact()" class="btn btn-primary btn-sm">Get In Touch</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position:fixed;right:0px;bottom:0px;margin:20px;z-index: +100;">
-      <strong>COVID-19 Alert</strong><br>Learn more about the <a href="#" class="alert-link">COVID-19 Screening tool</a>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    
-    <div style="display:flex; justify-content: center;">
-      <div class="row" style="width: 75%; padding-top:50px;">
-        <div class="col d-flex justify-content-center">
-          <div class="card" style="width: 18rem; margin:10px;">
-            <img src="images/istockphoto-958956392-612x612.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Software & Hardware Solutions</h5>
-              <p class="card-text">Application development, embedded systems design, circuit & PCB design.</p>
-              <a href="#" class="btn btn-primary">Learn more</a>
-            </div>
-          </div>
-        </div>
-        <div class="col d-flex justify-content-center">
-          <div class="card" style="width: 18rem; margin:10px;">
-            <img src="images/77496510-electronic-three-dimensional-plastic-printer-during-work-3d-printer-3d-printing.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">3D Printing</h5>
-              <p class="card-text">High quality and affordable custom 3D prints.<br/><br/></p>
-              <a href="#" class="btn btn-primary">Learn more</a>
-            </div>
-          </div>
-        </div>
-        <div class="col d-flex justify-content-center">
-          <div class="card" style="width: 18rem; margin:10px;">
-            <img src="images/pexels-photo-212372.jpeg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Photography & Videography</h5>
-              <p class="card-text">Landscape, product, sports photography & videography.</p>
-              <a href="#" class="btn btn-primary">Learn more</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div style="display:flex; justify-content: center;">
-      <div style="width: 75%; padding-top:50px;">
-        <h3>Want to learn more about me?</h3>
-      </div>
-    </div>
-    
-    
-    <div id="footer"></div>
-
-    <div id="contact-popup" class="contact-popup"></div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <script src = "js/import-nav.js"></script>
-    <script src = "js/open-contact.js"></script>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
-<html>
+</html>
