@@ -17,6 +17,8 @@ export type Position = {
   end: string
   summary?: string
   bullets?: string[]
+  /** Tools/tech used in this role, shown as chips. */
+  tags?: string[]
 }
 
 export type ExperienceEntry = {
@@ -30,6 +32,8 @@ export type ExperienceEntry = {
   end: string
   summary: string
   bullets: string[]
+  /** Tools/tech used in this role, shown as chips. */
+  tags?: string[]
   /** Earlier positions at the same company, most recent first — shown alongside the primary role when expanded. */
   earlierPositions?: Position[]
   /** Tucked behind the "Show earlier experience" toggle instead of shown by default. */
@@ -53,6 +57,7 @@ export const experience: ExperienceEntry[] = [
       'Owned end-to-end delivery of major features, including an application-wide user roles system and a migration from one-way to bidirectional API synchronization.',
       'Leveraged AI-assisted development (Claude Code, OpenAI Codex) to accelerate implementation and debugging while maintaining ownership of architecture, testing, security, and code quality.',
     ],
+    tags: ['Laravel', 'Vue.js', 'Typesense', 'REST APIs', 'GitHub Actions'],
   },
   {
     role: 'IoT Developer',
@@ -70,6 +75,7 @@ export const experience: ExperienceEntry[] = [
       'Built predictive analytics in Python (scikit-learn) to forecast CNC tool wear and remaining tool life, helping operators schedule maintenance before failures occurred.',
       'Led deployment of industrial connectivity (OPC-UA, Modbus, MQTT) across hundreds of manufacturing machines, partnering with IT on network segmentation and NAT strategies.',
     ],
+    tags: ['Node.js', 'React', 'MQTT', 'OPC-UA', 'InfluxDB', 'Python', 'Grafana'],
     earlierPositions: [
       {
         role: 'Engineering Student (Internship)',
@@ -110,6 +116,7 @@ export const experience: ExperienceEntry[] = [
       'Built a script to parse and save website content, reducing the risk of human error when migrating it to the company’s new site.',
       'Used JavaScript (Nuxt.js, Three.js), HTML/CSS, Bootstrap, Python, SQL, PHP (Laravel), Stripe/Shopify/Snipcart APIs, Webpack, and Netlify.',
     ],
+    tags: ['Nuxt.js', 'Three.js', 'Laravel', 'Stripe', 'Shopify', 'Webpack'],
   },
   {
     role: 'IT Student (Co-op)',
@@ -126,6 +133,7 @@ export const experience: ExperienceEntry[] = [
       'Worked with engineers to optimize algorithms for efficiency and cost savings.',
       'Trained employees and documented how to use the AWS management tools.',
     ],
+    tags: ['AWS (S3)', 'Python'],
     earlierPositions: [
       {
         role: 'IT Analyst',
@@ -167,6 +175,8 @@ export type ProjectEntry = {
   linkLabel?: string
   tags: string[]
   bullets: string[]
+  /** Path under /public to a project logo/mark, e.g. '/projects/factory-flow-logo.png'. Shown as a small badge on the project card; omitted entirely when unset. */
+  logo?: string
   /** Paths under /public, e.g. '/projects/factory-flow-1.png'. Empty until real screenshots are added. */
   images?: string[]
 }
@@ -174,6 +184,7 @@ export type ProjectEntry = {
 export const projects: ProjectEntry[] = [
   {
     name: 'Factory Flow',
+    logo: '/projects/factoryflow_logo.jpg',
     context: 'Personal Project',
     url: 'https://factoryflow.io',
     linkLabel: 'Visit site',
@@ -184,7 +195,7 @@ export const projects: ProjectEntry[] = [
       'Analytics pipelines and scheduled jobs turning raw machine events into KPIs — utilization, uptime, downtime, cycle efficiency, and OEE.',
       'Production infrastructure on Docker, Cloudflare Tunnels, PostgreSQL, and Redis, with observability, monitoring, payments, and docs via Nightwatch, Better Stack, Stripe, and Mintlify.',
     ],
-    images: [],
+    images: ['/projects/line-view-example-1.png'],
   },
   {
     name: 'Pose Estimation and Digit Recognition for Automated IC Chip Testing',
@@ -194,7 +205,7 @@ export const projects: ProjectEntry[] = [
       'Built a classical machine-vision system to detect incorrectly placed IC microchips in a test socket using pose estimation, without relying on neural networks.',
       'Developed an automated digit recognition pipeline — classical segmentation plus ML for the final digit classification — to accelerate serial number extraction during testing.',
     ],
-    images: [],
+    images: ['/projects/ic-chip-1.svg', '/projects/ic-chip-2.svg'],
   },
   {
     name: 'Sensor-Based Fuzzy Control of a 4-Legged Robot',
@@ -204,7 +215,27 @@ export const projects: ProjectEntry[] = [
       'Designed and simulated a rigid-bodied quadruped robot that uses fuzzy logic and foot-mounted contact sensors to dynamically adjust leg positioning and stay stable on uneven terrain.',
       'Compared the fuzzy-logic controller against a fixed-motion design, showing improved stability and lower motor fatigue in Simulink Multibody simulations.',
     ],
-    images: [],
+    images: ['/projects/fuzzy-robot-1.svg', '/projects/fuzzy-robot-2.svg'],
+  },
+  {
+    name: 'Portable Air Quality Monitor',
+    context: 'University of Ottawa · Capstone Project · with the City of Ottawa',
+    tags: ['React', 'REST APIs', 'IoT'],
+    bullets: [
+      'Built a prototype portable pollution monitor measuring CO2, PM2.5, GPS location, temperature, and humidity, with built-in capability to charge personal devices.',
+      'Built a custom backend REST API that automatically ingested sensor data for visualization in a React web app.',
+    ],
+    images: ['/projects/air-quality-monitor-1.svg', '/projects/air-quality-monitor-2.svg'],
+  },
+  {
+    name: 'ParkAid: AI Street Parking Detection',
+    context: 'University of Ottawa · Capstone Project',
+    tags: ['Machine Learning', 'Computer Vision', 'React', 'REST APIs', 'SQL'],
+    bullets: [
+      'Trained an AI model to detect parking space availability using existing public security camera infrastructure.',
+      'Built a backend REST API handling SQL queries and vehicle routing, with iOS, Android, and web clients built in React.',
+    ],
+    images: ['/projects/parkaid-1.svg', '/projects/parkaid-2.svg'],
   },
   {
     name: 'Quantum Dot Solar Cells: A Review of Next-Generation Photovoltaics',
@@ -214,7 +245,7 @@ export const projects: ProjectEntry[] = [
       'Reviewed how quantum dot solar cells use tunable bandgaps and multiple exciton generation to exceed the efficiency limits of conventional silicon cells.',
       'Analyzed key barriers to real-world performance, including manufacturing defects, toxic materials, and fabrication complexity.',
     ],
-    images: [],
+    images: ['/projects/quantum-dot-1.svg', '/projects/quantum-dot-2.svg'],
   },
   {
     name: 'Literature Review: Perovskite Semiconductors in Photovoltaic Cells',
@@ -224,7 +255,7 @@ export const projects: ProjectEntry[] = [
       'Reviewed the rapid efficiency gains of perovskite-based photovoltaic cells and the techniques driving them.',
       'Examined material instability challenges and future research directions, including curved and semi-transparent installations.',
     ],
-    images: [],
+    images: ['/projects/perovskite-1.svg', '/projects/perovskite-2.svg'],
   },
   {
     name: 'COVID-19 Screening Web Application',
@@ -234,7 +265,7 @@ export const projects: ProjectEntry[] = [
       'Built a web-based COVID-19 screening application to help employees self-assess before coming into work.',
       'Used Firebase Auth, Realtime Database, and Cloud Functions for authentication and data handling.',
     ],
-    images: [],
+    images: ['/projects/covid-screening-1.svg', '/projects/covid-screening-2.svg'],
   },
   {
     name: 'Intervalometer for Sony Cameras',
@@ -244,7 +275,7 @@ export const projects: ProjectEntry[] = [
       'Designed and prototyped a custom PCB that interfaces with Sony cameras to trigger photos at a set interval.',
       'Designed the circuit in Autodesk Eagle and hand-soldered the prototype board.',
     ],
-    images: [],
+    images: ['/projects/intervalometer-1.svg', '/projects/intervalometer-2.svg'],
   },
   {
     name: 'Order Manager Web Application',
@@ -254,18 +285,227 @@ export const projects: ProjectEntry[] = [
       "Built a React.js web application to replace a company's existing order management software.",
       'Built a REST API on Node.js (Express) backed by SQL to handle order queries.',
     ],
-    images: [],
+    images: ['/projects/order-manager-1.svg', '/projects/order-manager-2.svg'],
   },
 ]
 
-export const skills: { category: string; items: string[] }[] = [
-  { category: 'Backend', items: ['Laravel', 'PHP', 'Node.js', 'REST APIs', 'GraphQL', 'Typesense'] },
-  { category: 'Frontend', items: ['React', 'Vue.js', 'TypeScript', 'JavaScript', 'HTML/CSS'] },
-  { category: 'Databases', items: ['PostgreSQL', 'TimescaleDB', 'MySQL', 'InfluxDB', 'SQL'] },
-  { category: 'Cloud & DevOps', items: ['Docker', 'Git', 'GitHub Actions', 'CircleCI', 'Laravel Nightwatch', 'AWS (S3)'] },
-  { category: 'Industrial Systems', items: ['OPC-UA', 'MQTT', 'Modbus', 'MTConnect', 'Node-RED'] },
-  { category: 'Professional', items: ['Production Debugging', 'System Design', 'Automated Testing', 'Technical Documentation'] },
+export type Skill = {
+  name: string
+  /** Extra context shown when the skill is expanded — what it was for, not just that it was used. */
+  description?: string
+  /** Companies or projects where this was used in practice, most recent first. */
+  usedIn?: string[]
+}
+
+export type SkillGroup = {
+  category: string
+  blurb: string
+  items: Skill[]
+}
+
+const curatedSkills: SkillGroup[] = [
+  {
+    category: 'Backend',
+    blurb: 'APIs and services behind production SaaS and industrial platforms.',
+    items: [
+      {
+        name: 'Laravel',
+        description: 'Primary framework for production APIs, admin tooling, and background jobs.',
+        usedIn: ['Fractionl', 'Factory Flow'],
+      },
+      { name: 'PHP', description: 'Language behind the Laravel applications I maintain.', usedIn: ['Fractionl'] },
+      {
+        name: 'Node.js',
+        description: 'Real-time APIs for collecting and serving industrial machine data.',
+        usedIn: ['Magna International'],
+      },
+      {
+        name: 'REST APIs',
+        description: 'Designed and secured integrations across internal and third-party systems.',
+        usedIn: ['Fractionl', 'Magna International'],
+      },
+      { name: 'GraphQL' },
+      {
+        name: 'Typesense',
+        description: 'Schema design, indexing, and normalization for fast catalog search.',
+        usedIn: ['Fractionl'],
+      },
+    ],
+  },
+  {
+    category: 'Frontend',
+    blurb: 'Interfaces for dashboards, catalogs, and live operational data.',
+    items: [
+      {
+        name: 'React',
+        description: 'Dashboards and product UIs, from live machine metrics to part catalogs.',
+        usedIn: ['Magna International', 'Factory Flow'],
+      },
+      {
+        name: 'Vue.js',
+        description: "Frontend for a B2B SaaS platform's search, pricing, and ordering flows.",
+        usedIn: ['Fractionl'],
+      },
+      { name: 'TypeScript' },
+      { name: 'JavaScript', usedIn: ['Patio Concepts'] },
+      { name: 'HTML/CSS', usedIn: ['Patio Concepts'] },
+    ],
+  },
+  {
+    category: 'Databases',
+    blurb: 'Relational, time-series, and search-optimized storage.',
+    items: [
+      { name: 'PostgreSQL', usedIn: ['Factory Flow'] },
+      {
+        name: 'TimescaleDB',
+        description: 'Time-series storage for high-frequency manufacturing metrics.',
+        usedIn: ['Factory Flow'],
+      },
+      { name: 'MySQL' },
+      {
+        name: 'InfluxDB',
+        description: 'Stored vibration and sensor data streamed from shop-floor equipment.',
+        usedIn: ['Magna International'],
+      },
+      { name: 'SQL', usedIn: ['Patio Concepts'] },
+    ],
+  },
+  {
+    category: 'Cloud & DevOps',
+    blurb: 'Shipping, testing, and observability for production systems.',
+    items: [
+      { name: 'Docker', usedIn: ['Factory Flow'] },
+      { name: 'Git' },
+      {
+        name: 'GitHub Actions',
+        description: 'CI pipelines validating critical workflows on every pull request.',
+        usedIn: ['Fractionl'],
+      },
+      { name: 'CircleCI' },
+      {
+        name: 'Laravel Nightwatch',
+        description: 'Production monitoring and observability for a self-hosted SaaS platform.',
+        usedIn: ['Factory Flow'],
+      },
+      {
+        name: 'AWS (S3)',
+        description: 'Automated large-scale dataset management during an IT co-op term.',
+        usedIn: ['Magna International'],
+      },
+    ],
+  },
+  {
+    category: 'Industrial Systems',
+    blurb: 'Protocols connecting shop-floor machines to software.',
+    items: [
+      { name: 'OPC-UA', usedIn: ['Magna International', 'Factory Flow'] },
+      { name: 'MQTT', usedIn: ['Magna International', 'Factory Flow'] },
+      { name: 'Modbus', usedIn: ['Magna International', 'Factory Flow'] },
+      { name: 'MTConnect', usedIn: ['Magna International', 'Factory Flow'] },
+      { name: 'Node-RED' },
+    ],
+  },
+  {
+    category: 'Professional',
+    blurb: 'How I work day to day.',
+    items: [
+      {
+        name: 'Production Debugging',
+        description: 'Tracing and fixing issues in live systems without breaking existing workflows.',
+        usedIn: ['Fractionl'],
+      },
+      {
+        name: 'System Design',
+        description: 'Owned end-to-end architecture for major features, like a roles system and bidirectional sync.',
+        usedIn: ['Fractionl'],
+      },
+      {
+        name: 'Automated Testing',
+        description: 'Led adoption of PHPUnit, Laravel Dusk, and CI pipelines.',
+        usedIn: ['Fractionl'],
+      },
+      {
+        name: 'Technical Documentation',
+        description: 'API specs, lab guides, and tool documentation for technical and non-technical audiences.',
+        usedIn: ['Magna International', 'University of Ottawa'],
+      },
+    ],
+  },
 ]
+
+/**
+ * Category to file a tag under when it turns up as an Experience/Project tag but has no
+ * hand-written entry (with description) in `curatedSkills` above. Keeps the Skills section
+ * a complete, auto-updating picture instead of one that silently drifts out of date.
+ */
+const autoSkillCategory: Record<string, string> = {
+  IoT: 'Industrial Systems',
+  Grafana: 'Cloud & DevOps',
+  Webpack: 'Cloud & DevOps',
+  Firebase: 'Cloud & DevOps',
+  'Nuxt.js': 'Frontend',
+  'Three.js': 'Frontend',
+  Electron: 'Frontend',
+  Ionic: 'Frontend',
+  Python: 'Backend',
+  Stripe: 'Backend',
+  Shopify: 'Backend',
+  Express: 'Backend',
+  OpenCV: 'Backend',
+  Arduino: 'Industrial Systems',
+  'PCB Design': 'Industrial Systems',
+  Eagle: 'Industrial Systems',
+  'Computer Vision': 'Professional',
+  'Machine Learning': 'Professional',
+  MATLAB: 'Professional',
+  Simulink: 'Professional',
+  'Fuzzy Logic': 'Professional',
+  Robotics: 'Professional',
+  Photovoltaics: 'Professional',
+  Research: 'Professional',
+}
+
+function buildSkills(): SkillGroup[] {
+  const groups = curatedSkills.map((group) => ({ ...group, items: group.items.map((item) => ({ ...item })) }))
+  const known = new Set(groups.flatMap((group) => group.items.map((item) => item.name)))
+
+  const sources = new Map<string, Set<string>>()
+  const record = (tag: string, source: string) => {
+    if (!sources.has(tag)) sources.set(tag, new Set())
+    sources.get(tag)!.add(source)
+  }
+
+  for (const entry of experience) {
+    entry.tags?.forEach((tag) => record(tag, entry.company))
+    entry.earlierPositions?.forEach((position) => position.tags?.forEach((tag) => record(tag, entry.company)))
+  }
+  for (const project of projects) {
+    project.tags.forEach((tag) => record(tag, project.name))
+  }
+
+  const other: Skill[] = []
+  for (const [tag, usedIn] of sources) {
+    if (known.has(tag)) continue
+    known.add(tag)
+    const skill: Skill = { name: tag, usedIn: [...usedIn] }
+    const group = groups.find((g) => g.category === autoSkillCategory[tag])
+    if (group) group.items.push(skill)
+    else other.push(skill)
+  }
+
+  if (other.length > 0) {
+    groups.push({
+      category: 'Other',
+      blurb: 'Additional tools picked up from projects and experience.',
+      items: other,
+    })
+  }
+
+  return groups
+}
+
+/** Backend, Frontend, etc. plus whatever else shows up as a Project/Experience tag — always a full picture. */
+export const skills: SkillGroup[] = buildSkills()
 
 export type Course = {
   code: string

@@ -11,11 +11,11 @@ export function Footer() {
         <p className="text-sm text-muted-foreground">
           Always happy to connect — reach out below.
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
           <a
             href={`mailto:${profile.email}`}
             aria-label="Email"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            className="rounded-lg p-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <Mail className="size-5" />
           </a>
@@ -24,7 +24,7 @@ export function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            className="rounded-lg p-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <GitHubIcon className="size-5" />
           </a>
@@ -33,7 +33,7 @@ export function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            className="rounded-lg p-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <LinkedInIcon className="size-5" />
           </a>

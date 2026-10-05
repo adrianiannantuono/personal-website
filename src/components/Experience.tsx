@@ -2,6 +2,7 @@ import { Camera, ChevronDown, ShoppingBag, SquareTerminal, type LucideIcon } fro
 import { useState } from 'react'
 import { SectionHeading } from '@/components/SectionHeading'
 import { Reveal } from '@/components/Reveal'
+import { SkillChip } from '@/components/SkillChip'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { experience, type ExperienceEntry, type Position } from '@/data/resume'
 import { cn } from '@/lib/utils'
@@ -61,6 +62,7 @@ function ExperienceItem({ Icon, job }: { Icon: LucideIcon; job: ExperienceEntry 
     end: job.end,
     summary: job.summary,
     bullets: job.bullets,
+    tags: job.tags,
   }
 
   return (
@@ -125,6 +127,13 @@ function PositionBlock({ position, company }: { position: Position; company: str
       </div>
       {position.location && <p className="text-sm text-muted-foreground">{position.location}</p>}
       {position.summary && <p className="mt-2 text-sm leading-relaxed">{position.summary}</p>}
+      {position.tags && position.tags.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {position.tags.map((tag) => (
+            <SkillChip key={tag} skill={{ name: tag }} />
+          ))}
+        </div>
+      )}
       {hasBullets && (
         <>
           <CollapsibleTrigger asChild>

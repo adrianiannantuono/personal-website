@@ -6,7 +6,7 @@ import { profile } from '@/data/resume'
 export function Hero() {
   return (
     <section id="top" className="scroll-mt-14 py-16 sm:py-24">
-      <p className="text-sm font-medium text-muted-foreground">Hi, I'm</p>
+      <p className="text-sm font-medium text-muted-foreground">Hello, I'm</p>
       <h1 className="mt-2 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
         {profile.name}
       </h1>
