@@ -1,7 +1,9 @@
-import { ChevronDown, GraduationCap, Search } from 'lucide-react'
+import { ArrowUpRight, GraduationCap, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import { ExpandToggle } from '@/components/ExpandToggle'
 import { Reveal } from '@/components/Reveal'
 import { SectionHeading } from '@/components/SectionHeading'
+import { SkillChip } from '@/components/SkillChip'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
   Dialog,
@@ -13,7 +15,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { type Course, education } from '@/data/resume'
-import { cn } from '@/lib/utils'
+import { viewProject } from '@/lib/sectionEvents'
 
 export function Education() {
   return (
@@ -65,12 +67,12 @@ function EducationItem({ entry }: { entry: (typeof education)[number] }) {
 
         {(hasHighlights || hasCourses) && (
           <CollapsibleTrigger asChild>
-            <button className="mt-2 flex items-center gap-1 text-sm font-medium text-brand hover:underline">
-              {isOpen ? 'Show less' : 'Show details'}
-              <ChevronDown
-                className={cn('size-3.5 transition-transform', isOpen && 'rotate-180')}
-              />
-            </button>
+            <ExpandToggle
+              expanded={isOpen}
+              expandedLabel="Show less"
+              collapsedLabel="Show details"
+              className="mt-2"
+            />
           </CollapsibleTrigger>
         )}
 
@@ -96,6 +98,7 @@ function EducationItem({ entry }: { entry: (typeof education)[number] }) {
 }
 
 function CourseDialog({ entry }: { entry: (typeof education)[number] }) {
+  const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
@@ -116,13 +119,19 @@ function CourseDialog({ entry }: { entry: (typeof education)[number] }) {
   }
 
   return (
-    <Dialog onOpenChange={(open) => !open && setQuery('')}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen)
+        if (!isOpen) setQuery('')
+      }}
+    >
       <DialogTrigger asChild>
         <button className="text-sm font-medium underline-offset-4 hover:underline">
           View courses ({entry.courses!.length})
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-4xl">
+      <DialogContent className="sm:max-w-4xl" onOpenAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Coursework</DialogTitle>
           <DialogDescription>{entry.degree}</DialogDescription>
@@ -159,6 +168,26 @@ function CourseDialog({ entry }: { entry: (typeof education)[number] }) {
                       <p className="mt-0.5 text-xs text-muted-foreground">
                         {course.description}
                       </p>
+                    )}
+                    {course.tags && course.tags.length > 0 && (
+                      <div className="mt-1.5 flex flex-wrap gap-1">
+                        {course.tags.map((tag) => (
+                          <SkillChip key={tag} skill={{ name: tag }} size="sm" />
+                        ))}
+                      </div>
+                    )}
+                    {course.project && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOpen(false)
+                          viewProject(course.project!)
+                        }}
+                        className="mt-1.5 flex items-center gap-1 text-xs font-medium text-brand hover:underline"
+                      >
+                        View project
+                        <ArrowUpRight className="size-3" />
+                      </button>
                     )}
                   </div>
                 ))}

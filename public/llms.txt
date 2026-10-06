@@ -1,0 +1,44 @@
+# Adrian Iannantuono
+
+> Software Engineer (M.Eng, B.A.Sc) based in Richmond Hill, ON, Canada. 3+ years of experience building production SaaS and industrial systems, focused on full-stack development, automation, and data-driven applications.
+
+This file summarizes the full site (https://adrianiannantuono.ca) as plain markdown, for quick, low-noise ingestion by AI agents.
+
+Contact: aiannantuono@me.com · GitHub: https://github.com/adrianiannantuono · LinkedIn: https://www.linkedin.com/in/adrianiannantuono/
+
+## Experience
+
+- **Software Developer, Fractionl** (Sep 2025–Present, Richmond Hill, ON) — Full-stack features for a B2B SaaS platform in Laravel and Vue.js: fast product search via Typesense, dynamic pricing and ordering, secure REST API integrations (QuickBooks, Freightcom, OpenAI, Chatwoot), CI/CD with PHPUnit, Laravel Dusk, and GitHub Actions. Owned an application-wide user roles system and a migration to bidirectional API sync.
+- **IoT Developer, Magna International** (Sep 2024–Sep 2025, Vaughan, ON; preceded by an internship from May 2024) — Connected hundreds of manufacturing machines via MQTT, OPC-UA, Modbus, and MTConnect into Node.js APIs; built React/Grafana dashboards backed by InfluxDB; built Python (scikit-learn) predictive maintenance models for CNC tool wear; led industrial connectivity deployment across hundreds of machines.
+- **Graduate Teaching Assistant, University of Ottawa** (Sep 2023–Dec 2024, Ottawa, ON) — Led lab sessions for 50+ students in digital and analog circuit design.
+- **Web and Software Developer, Patio Concepts** (Jan 2021–Sep 2022, Richmond Hill, ON) — Maintained Nuxt.js/Three.js e-commerce sites serving 15k+ monthly visitors, backed by a Laravel API with Stripe and Shopify integrations.
+- **IT Student (Co-op), Magna International** (May 2020–Aug 2020, Vaughan, ON; preceded by an IT Analyst role May 2019–Apr 2020) — IT infrastructure projects and Python automation of AWS S3 environments.
+
+## Skills
+
+- **Backend**: Laravel, PHP, Node.js, REST APIs, GraphQL, Typesense
+- **Frontend**: React, Vue.js, TypeScript, JavaScript, HTML/CSS
+- **Databases**: PostgreSQL, TimescaleDB, MySQL, InfluxDB, SQL
+- **Cloud & DevOps**: Docker, Git, GitHub Actions, CircleCI, Laravel Nightwatch, AWS (S3)
+- **Industrial Systems**: OPC-UA, MQTT, Modbus, MTConnect, Node-RED
+- **Professional**: Production debugging, system design, automated testing, technical documentation
+
+## Projects
+
+- **Factory Flow** (https://factoryflow.io) — Real-time manufacturing analytics platform. Cross-platform industrial gateway (Electron + React) normalizing OPC-UA, MQTT, Modbus, and MTConnect into a unified API; analytics pipelines computing OEE, uptime, and cycle efficiency; production infrastructure on Docker, Cloudflare Tunnels, PostgreSQL, Redis, Stripe.
+- **Portfolio Website** (https://adrianiannantuono.ca) — This site: React/TypeScript/Vite with a resume-driven data layer, live search and filtering, light/dark theming, built with Radix UI and Tailwind CSS.
+- **Pose Estimation and Digit Recognition for Automated IC Chip Testing** (M.Eng project) — Classical machine-vision system to detect misplaced IC chips via pose estimation, plus an automated digit-recognition pipeline for serial number extraction.
+- **Sensor-Based Fuzzy Control of a 4-Legged Robot** (M.Eng project) — Simulated a quadruped robot using fuzzy logic and foot-mounted contact sensors for stability on uneven terrain, in MATLAB/Simulink.
+- **Portable Air Quality Monitor** (B.A.Sc capstone, with the City of Ottawa) — Prototype pollution monitor (CO2, PM2.5, GPS, temperature, humidity) with a React frontend and REST API backend.
+- **ParkAid: AI Street Parking Detection** (B.A.Sc capstone) — ML model detecting parking availability from public security camera feeds, with a REST API and React/iOS/Android clients.
+- Other projects: literature reviews on quantum dot and perovskite photovoltaics, a COVID-19 screening web app, a custom PCB intervalometer for Sony cameras, and an order management web app.
+
+## Education
+
+- **Master's in Electrical & Computer Engineering (M.Eng)**, University of Ottawa, 2023–2025, GPA 3.9/4.0
+- **Bachelor's in Computer Engineering (B.A.Sc)**, University of Ottawa, 2018–2023, co-op program, graduated with distinction
+
+## Notes for AI agents
+
+- Full detail (bullet points, course lists, tags) is in the raw HTML at https://adrianiannantuono.ca (statically prerendered — no JavaScript execution needed).
+- A downloadable resume PDF is available at https://adrianiannantuono.ca/resume.pdf.

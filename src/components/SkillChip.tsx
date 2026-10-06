@@ -26,9 +26,11 @@ import {
   SiReact,
   SiShopify,
   SiStripe,
+  SiTailwindcss,
   SiThreedotjs,
   SiTimescale,
   SiTypescript,
+  SiVite,
   SiVuedotjs,
   SiWebpack,
 } from '@icons-pack/react-simple-icons'
@@ -53,8 +55,10 @@ import {
   Wifi,
   Workflow,
 } from 'lucide-react'
+import { useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import type { Skill } from '@/data/resume'
+import { getSkillContext, type Skill } from '@/data/resume'
+import { viewExperience, viewProject } from '@/lib/sectionEvents'
 import { cn } from '@/lib/utils'
 
 type IconConfig = { Icon: React.ComponentType<{ size?: number; color?: string; className?: string }>; brand?: boolean }
@@ -100,6 +104,8 @@ const skillIcons: Record<string, IconConfig> = {
   Express: { Icon: SiExpress, brand: true },
   Ionic: { Icon: SiIonic, brand: true },
   IoT: { Icon: Wifi },
+  Vite: { Icon: SiVite, brand: true },
+  'Tailwind CSS': { Icon: SiTailwindcss, brand: true },
   // Experience tags
   Grafana: { Icon: SiGrafana, brand: true },
   'Nuxt.js': { Icon: SiNuxt, brand: true },
@@ -117,21 +123,33 @@ const skillIcons: Record<string, IconConfig> = {
 }
 
 /** A small icon + label pill, optionally popping open extra context (description, where it was used). */
-export function SkillChip({ skill }: { skill: Skill }) {
+export function SkillChip({
+  skill,
+  className,
+  size = 'default',
+}: {
+  skill: Skill
+  className?: string
+  /** 'sm' for denser contexts, like inline within bullet points. */
+  size?: 'default' | 'sm'
+}) {
   const config = skillIcons[skill.name]
   const Icon = config?.Icon
   const hasDetails = Boolean(skill.description || skill.usedIn?.length)
+  const [open, setOpen] = useState(false)
 
   const chip = (
     <span
       className={cn(
-        'inline-flex h-6 items-center gap-1.5 rounded-md border border-border bg-card px-2 text-xs font-medium text-foreground transition-colors',
+        'inline-flex items-center gap-1.5 rounded-md border border-border bg-card font-medium text-foreground transition-colors',
+        size === 'sm' ? 'h-5 px-1.5 text-[11px]' : 'h-6 px-2 text-xs',
         hasDetails && 'cursor-pointer hover:border-brand/40 hover:bg-brand/5',
+        className,
       )}
     >
       {Icon && (
         <Icon
-          size={13}
+          size={size === 'sm' ? 11 : 13}
           {...(config?.brand ? { color: 'default' } : { className: 'text-muted-foreground' })}
         />
       )}
@@ -142,25 +160,52 @@ export function SkillChip({ skill }: { skill: Skill }) {
   if (!hasDetails) return chip
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button type="button">{chip}</button>
       </PopoverTrigger>
-      <PopoverContent>
-        <p className="font-medium">{skill.name}</p>
+      <PopoverContent className="w-80">
+        <div className="flex items-center gap-1.5">
+          {Icon && (
+            <Icon
+              size={14}
+              {...(config?.brand ? { color: 'default' } : { className: 'text-muted-foreground' })}
+            />
+          )}
+          <p className="font-medium">{skill.name}</p>
+        </div>
         {skill.description && (
           <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{skill.description}</p>
         )}
         {skill.usedIn && skill.usedIn.length > 0 && (
-          <div className="mt-2.5 flex flex-wrap gap-1">
-            {skill.usedIn.map((place) => (
-              <span
-                key={place}
-                className="rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground"
-              >
-                {place}
-              </span>
-            ))}
+          <div className="mt-3 space-y-2.5 border-t border-border pt-2.5">
+            {skill.usedIn.map((place) => {
+              const context = getSkillContext(skill.name, place)
+              return (
+                <button
+                  key={place}
+                  type="button"
+                  onClick={() => {
+                    setOpen(false)
+                    if (context?.kind === 'experience') viewExperience(place)
+                    else if (context?.kind === 'project') viewProject(place)
+                  }}
+                  className="flex w-full gap-2 rounded-md text-left transition-colors hover:bg-muted/60 -mx-1 px-1 py-0.5"
+                >
+                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded bg-white ring-1 ring-border">
+                    {context?.logo && <img src={context.logo} alt="" className="size-3.5 object-contain" />}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-xs font-medium">{place}</p>
+                    {context?.bullets.map((bullet, i) => (
+                      <p key={i} className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+                        {bullet}
+                      </p>
+                    ))}
+                  </div>
+                </button>
+              )
+            })}
           </div>
         )}
       </PopoverContent>

@@ -9,16 +9,11 @@ function Select({
 }
 
 function SelectValue({
-  className,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
-  return (
-    <SelectPrimitive.Value
-      data-slot="select-value"
-      className={cn("min-w-0 truncate", className)}
-      {...props}
-    />
-  )
+  // Radix doesn't forward className onto the rendered span, so truncation is
+  // handled on SelectTrigger instead via a descendant selector.
+  return <SelectPrimitive.Value data-slot="select-value" {...props} />
 }
 
 function SelectTrigger({
@@ -30,7 +25,7 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        "flex h-8 min-w-0 items-center justify-between gap-2 rounded-lg border border-border bg-background px-2.5 text-sm outline-none transition-colors hover:bg-muted focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-placeholder:text-muted-foreground",
+        "flex h-8 min-w-0 items-center justify-between gap-2 rounded-lg border border-border bg-background px-2.5 text-sm outline-none transition-colors hover:bg-muted focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-placeholder:text-muted-foreground [&>span]:min-w-0 [&>span]:flex-1 [&>span]:truncate [&>span]:text-left",
         className
       )}
       {...props}
@@ -68,6 +63,25 @@ function SelectContent({
   )
 }
 
+function SelectGroup({
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Group>) {
+  return <SelectPrimitive.Group data-slot="select-group" {...props} />
+}
+
+function SelectLabel({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Label>) {
+  return (
+    <SelectPrimitive.Label
+      data-slot="select-label"
+      className={cn("px-2.5 py-1.5 text-xs font-medium text-muted-foreground", className)}
+      {...props}
+    />
+  )
+}
+
 function SelectItem({
   className,
   children,
@@ -90,4 +104,4 @@ function SelectItem({
   )
 }
 
-export { Select, SelectTrigger, SelectValue, SelectContent, SelectItem }
+export { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem }

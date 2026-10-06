@@ -9,7 +9,7 @@ export function Footer() {
       <Separator className="mb-10" />
       <div className="flex flex-col items-center gap-4 text-center">
         <p className="text-sm text-muted-foreground">
-          Always happy to connect — reach out below.
+          Get in touch.
         </p>
         <div className="flex items-center gap-1">
           <a
