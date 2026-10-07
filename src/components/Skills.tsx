@@ -1,4 +1,4 @@
-import { Cloud, Code, Database, Factory, Filter, SearchX, Server, User, type LucideIcon } from 'lucide-react'
+import { ChevronDown, Cloud, Code, Database, Factory, Filter, SearchX, Server, User, type LucideIcon } from 'lucide-react'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ExpandableSearch } from '@/components/ExpandableSearch'
 import { Reveal } from '@/components/Reveal'
@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { experience, type Skill, type SkillGroup, skills } from '@/data/resume'
+import { experience, type Skill, skills } from '@/data/resume'
 import { cn } from '@/lib/utils'
 
 const categoryIcons: Record<string, LucideIcon> = {
@@ -26,6 +26,19 @@ const categoryIcons: Record<string, LucideIcon> = {
 }
 
 const CATEGORIES = skills.map((group) => group.category)
+// `skills` is already sorted into subcategory clusters (see `buildSkills` in resume.ts), so a
+// de-duped pass over each category's items reproduces that same order — used by the filter
+// dropdown's per-category subcategory disclosure.
+const CATEGORY_SUBCATEGORIES: Record<string, string[]> = {}
+for (const group of skills) {
+  CATEGORY_SUBCATEGORIES[group.category] = Array.from(
+    new Set(group.items.map((item) => item.subcategory).filter((s): s is string => Boolean(s))),
+  )
+}
+/** Joins a category and subcategory into one filter value — `::` can't appear in either name. */
+function subcategoryFilterValue(category: string, subcategory: string): string {
+  return `${category}::${subcategory}`
+}
 // Companies/roles, not the looser project-tag strings also found in `usedIn` — mirrors Projects' own Category/Experience split.
 const EXPERIENCES = Array.from(new Set(experience.map((entry) => entry.company)))
 const EXPERIENCE_LOGOS: Record<string, string> = {}
@@ -38,24 +51,87 @@ const AUTO_SCROLL_SPEED = 26
 /** A mouse drag past this many px counts as a drag rather than a click (matches Projects' carousel). */
 const DRAG_THRESHOLD = 5
 
-/** Matches on skill name, category, or the experience/project it was used in. */
+/** Matches on skill name, category, subcategory, or the experience/project it was used in. */
 function matchesQuery(skill: Skill, category: string, query: string): boolean {
   if (!query) return true
   if (skill.name.toLowerCase().includes(query)) return true
   if (category.toLowerCase().includes(query)) return true
+  if (skill.subcategory?.toLowerCase().includes(query)) return true
   return skill.usedIn?.some((place) => place.toLowerCase().includes(query)) ?? false
 }
 
-/** Matches the dropdown filter, which picks either a category or a used-in project/experience. */
+/** Matches the dropdown filter, which picks a category, a category+subcategory pair (joined by
+ *  `subcategoryFilterValue`), or a used-in project/experience. */
 function matchesFilter(skill: Skill, category: string, filter: string): boolean {
   if (filter === 'all') return true
+  if (filter.includes('::')) {
+    const [filterCategory, filterSubcategory] = filter.split('::')
+    return category === filterCategory && skill.subcategory === filterSubcategory
+  }
   if (category === filter) return true
   return skill.usedIn?.includes(filter) ?? false
+}
+
+/** Chunks a category's items into consecutive same-subcategory runs — `skills` is already sorted
+ *  this way (see `buildSkills` in resume.ts), so this is just turning that clustering into groups
+ *  to render as their own row, not re-sorting anything. */
+function groupBySubcategory(items: Skill[]): { subcategory?: string; items: Skill[] }[] {
+  const chunks: { subcategory?: string; items: Skill[] }[] = []
+  for (const item of items) {
+    const last = chunks[chunks.length - 1]
+    if (last && last.subcategory === item.subcategory) last.items.push(item)
+    else chunks.push({ subcategory: item.subcategory, items: [item] })
+  }
+  return chunks
 }
 
 export function Skills() {
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState('all')
+  const [searchExpanded, setSearchExpanded] = useState(false)
+  // Which categories are showing their per-subcategory breakdown instead of one flat row.
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set())
+  const toggleCategory = (category: string) => {
+    setExpandedCategories((prev) => {
+      const next = new Set(prev)
+      if (next.has(category)) next.delete(category)
+      else next.add(category)
+      return next
+    })
+  }
+  // Which category has its subcategories expanded in the filter dropdown — separate from
+  // `expandedCategories` above, which controls the list's own inline breakdown. Only one at a
+  // time, so opening a category closes whichever one was open before.
+  const [openFilterCategory, setOpenFilterCategory] = useState<string | null>(null)
+  // The category that was just closed (directly, or bumped by a different one opening) — kept
+  // mounted for one transition so its row can animate shut instead of vanishing instantly. A
+  // mounted-but-collapsed item would otherwise still be reachable by arrow-key navigation inside
+  // the (Radix) listbox, so this isn't just cosmetic.
+  const [closingFilterCategory, setClosingFilterCategory] = useState<string | null>(null)
+  const closeFilterTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const toggleFilterCategory = (category: string) => {
+    clearTimeout(closeFilterTimerRef.current)
+    setOpenFilterCategory((prev) => {
+      const next = prev === category ? null : category
+      const nowClosing = prev
+      if (nowClosing && nowClosing !== next) {
+        setClosingFilterCategory(nowClosing)
+        closeFilterTimerRef.current = setTimeout(() => setClosingFilterCategory(null), 300)
+      }
+      return next
+    })
+  }
+  useEffect(() => () => clearTimeout(closeFilterTimerRef.current), [])
+  // Picking "All skills", a plain category, or an experience also collapses any open
+  // subcategory disclosure — only picking a subcategory itself leaves it as-is.
+  const handleFilterChange = (value: string) => {
+    setFilter(value)
+    if (!value.includes('::')) {
+      clearTimeout(closeFilterTimerRef.current)
+      setOpenFilterCategory(null)
+      setClosingFilterCategory(null)
+    }
+  }
   const normalized = query.trim().toLowerCase()
   const isFiltering = normalized.length > 0 || filter !== 'all'
 
@@ -73,19 +149,27 @@ export function Skills() {
 
   return (
     <section id="skills" className="scroll-mt-14 py-12">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <div>
+      <div className="mb-6 flex items-start justify-between gap-3">
+        <div className="min-w-0">
           <SectionHeading className="mb-1.5">Skills</SectionHeading>
-          <p className="text-sm text-muted-foreground">Click a skill to see where I've used it.</p>
+          <p
+            className={cn(
+              'text-sm text-muted-foreground transition-[margin-top] duration-200 ease-out',
+              searchExpanded && 'mt-4',
+            )}
+          >
+            Click a skill to see where I've used it.
+          </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <ExpandableSearch
             query={query}
             onQueryChange={setQuery}
-            placeholder="Search by name, category, or project…"
+            onExpandedChange={setSearchExpanded}
+            placeholder="Search for a skill"
             label="Search skills"
           />
-          <Select value={filter} onValueChange={setFilter}>
+          <Select value={filter} onValueChange={handleFilterChange}>
             <SelectTrigger
               className="relative size-11 shrink-0 justify-center gap-0 border-0 bg-transparent px-0 hover:bg-muted [&>svg:last-child]:hidden"
               aria-label="Filter skills"
@@ -104,13 +188,57 @@ export function Skills() {
                 <SelectLabel>Category</SelectLabel>
                 {CATEGORIES.map((category) => {
                   const Icon = categoryIcons[category] ?? Code
+                  const subcategories = CATEGORY_SUBCATEGORIES[category] ?? []
+                  const isOpen = openFilterCategory === category
+                  const isMounted = isOpen || closingFilterCategory === category
                   return (
-                    <SelectItem key={category} value={category}>
-                      <span className="flex items-center gap-2">
-                        <Icon className="size-3.5 shrink-0 text-muted-foreground" />
-                        {category}
-                      </span>
-                    </SelectItem>
+                    <div key={category}>
+                      <div className="flex items-center gap-0.5">
+                        <SelectItem value={category} className="w-auto flex-1">
+                          <span className="flex items-center gap-2">
+                            <Icon className="size-3.5 shrink-0 text-muted-foreground" />
+                            {category}
+                          </span>
+                        </SelectItem>
+                        {subcategories.length > 0 && (
+                          <button
+                            type="button"
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              toggleFilterCategory(category)
+                            }}
+                            aria-expanded={isOpen}
+                            aria-label={isOpen ? `Hide ${category} subcategories` : `Show ${category} subcategories`}
+                            className="flex size-7 shrink-0 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted"
+                          >
+                            <ChevronDown
+                              className={cn('size-3.5 transition-transform duration-200', isOpen && 'rotate-180')}
+                            />
+                          </button>
+                        )}
+                      </div>
+                      {isMounted && (
+                        <div
+                          className={cn(
+                            'grid transition-[grid-template-rows] duration-300 ease-in-out',
+                            isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+                          )}
+                        >
+                          <div className="overflow-hidden">
+                            {subcategories.map((subcategory) => (
+                              <SelectItem
+                                key={subcategory}
+                                value={subcategoryFilterValue(category, subcategory)}
+                                className="py-1 pl-8 text-xs text-muted-foreground"
+                              >
+                                {subcategory}
+                              </SelectItem>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   )
                 })}
               </SelectGroup>
@@ -156,18 +284,79 @@ export function Skills() {
           </button>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-8">
           {filteredGroups.map((group, i) => {
             const Icon = categoryIcons[group.category] ?? Code
+            const subgroups = groupBySubcategory(group.items)
+            // Whether there's more than one subcategory to break into — this is what the manual
+            // toggle acts on. (Unfiltered, every category has several; filtering can narrow it
+            // down to just one, which is handled separately below.)
+            const hasMultipleSubcats = subgroups.length > 1
+            const isToggledOpen = expandedCategories.has(group.category)
+            // A search/filter forces the breakdown open — including down to a single matching
+            // subcategory, so a result stays labeled by what it matched on — regardless of
+            // what the user last toggled by hand.
+            const showBreakdown = isFiltering || (hasMultipleSubcats && isToggledOpen)
+            // The toggle is only meaningful (and shown) when there's more than one subcategory to
+            // act on and the user can actually act on it — while filtering it's forced open, so a
+            // button there would be dead weight.
+            const canToggle = hasMultipleSubcats && !isFiltering
+            // Shared between both states so the icon/title/chevron never shift position when
+            // toggling — only what's rendered beside or below this changes.
+            const header = canToggle ? (
+              <button
+                type="button"
+                onClick={() => toggleCategory(group.category)}
+                aria-expanded={isToggledOpen}
+                aria-label={isToggledOpen ? `Collapse ${group.category}` : `Break ${group.category} into subcategories`}
+                className="relative flex w-fit max-w-28 shrink-0 items-center gap-1 rounded text-left transition-colors before:absolute before:-inset-y-2.5 before:inset-x-0 before:content-[''] hover:text-foreground sm:max-w-36"
+              >
+                <Icon className="size-4 shrink-0 text-muted-foreground" />
+                <h3 className="w-min text-sm leading-tight font-medium">{group.category}</h3>
+                <ChevronDown
+                  className={cn(
+                    'size-3.5 shrink-0 text-muted-foreground transition-transform duration-200',
+                    isToggledOpen && 'rotate-180',
+                  )}
+                />
+              </button>
+            ) : (
+              <div className="flex w-fit max-w-28 shrink-0 items-center gap-1 sm:max-w-36">
+                <Icon className="size-4 shrink-0 text-muted-foreground" />
+                <h3 className="w-min text-sm leading-tight font-medium">{group.category}</h3>
+              </div>
+            )
             return (
               <Reveal key={group.category} delay={i * 60}>
-                <div className="flex items-center gap-3">
-                  <div className="flex w-28 shrink-0 items-center gap-1.5 sm:w-36">
-                    <Icon className="size-4 shrink-0 text-muted-foreground" />
-                    <h3 className="truncate text-sm font-medium">{group.category}</h3>
-                  </div>
-                  <MarqueeRow group={group} />
+                <div className="flex items-start gap-3">
+                  {header}
+                  {!showBreakdown && <MarqueeRow items={group.items} />}
                 </div>
+                {(hasMultipleSubcats || isFiltering) && (
+                  <div
+                    className={cn(
+                      'grid transition-[grid-template-rows] duration-300 ease-in-out',
+                      showBreakdown ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+                    )}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="space-y-2 pt-2.5">
+                        {subgroups.map((sub, j) => (
+                          <div key={sub.subcategory ?? `_${j}`} className="flex items-center gap-3">
+                            <div className="w-28 shrink-0 sm:w-36">
+                              {sub.subcategory && (
+                                <span className="block text-xs leading-tight text-muted-foreground">
+                                  {sub.subcategory}
+                                </span>
+                              )}
+                            </div>
+                            <MarqueeRow items={sub.items} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </Reveal>
             )
           })}
@@ -177,7 +366,7 @@ export function Skills() {
   )
 }
 
-function MarqueeRow({ group }: { group: SkillGroup }) {
+function MarqueeRow({ items }: { items: Skill[] }) {
   const scrollerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const draggingRef = useRef(false)
@@ -201,7 +390,7 @@ function MarqueeRow({ group }: { group: SkillGroup }) {
     const observer = new ResizeObserver(measure)
     observer.observe(scroller)
     return () => observer.disconnect()
-  }, [group.items])
+  }, [items])
 
   // Drives scrollLeft directly (rather than a CSS transform) so native drag/scroll and the
   // auto-advance share the same source of truth instead of fighting each other.
@@ -317,7 +506,7 @@ function MarqueeRow({ group }: { group: SkillGroup }) {
             ref={copy === 0 ? contentRef : undefined}
             className="flex shrink-0 items-center gap-1.5"
           >
-            {group.items.map((item, j) => (
+            {items.map((item, j) => (
               <SkillChip key={`${copy}-${item.name}-${j}`} skill={item} className="shrink-0" />
             ))}
             {needsLoop && (

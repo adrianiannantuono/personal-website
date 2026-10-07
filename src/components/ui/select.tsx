@@ -50,14 +50,14 @@ function SelectContent({
         data-slot="select-content"
         position={position}
         className={cn(
-          "z-50 min-w-[8rem] overflow-hidden rounded-xl bg-popover p-1 text-popover-foreground ring-1 ring-foreground/10 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "z-50 min-w-[8rem] max-h-[var(--radix-select-content-available-height)] overflow-hidden rounded-xl bg-popover p-1 text-popover-foreground ring-1 ring-foreground/10 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           position === "popper" &&
             "data-[side=bottom]:translate-y-1 data-[side=top]:-translate-y-1",
           className
         )}
         {...props}
       >
-        <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
+        <SelectPrimitive.Viewport className="max-h-[inherit] overflow-y-auto">{children}</SelectPrimitive.Viewport>
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
   )

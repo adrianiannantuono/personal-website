@@ -1,6 +1,6 @@
 # Adrian Iannantuono
 
-> Software Engineer (M.Eng, B.A.Sc) based in Richmond Hill, ON, Canada. 3+ years of experience building production SaaS and industrial systems, focused on full-stack development, automation, and data-driven applications.
+> Software Developer (M.Eng, B.A.Sc) based in Toronto, ON, Canada. 3+ years of experience building production SaaS and industrial systems, focused on full-stack development, automation, and data-driven applications.
 
 This file summarizes the full site (https://adrianiannantuono.ca) as plain markdown, for quick, low-noise ingestion by AI agents.
 
@@ -8,10 +8,10 @@ Contact: aiannantuono@me.com · GitHub: https://github.com/adrianiannantuono · 
 
 ## Experience
 
-- **Software Developer, Fractionl** (Sep 2025–Present, Richmond Hill, ON) — Full-stack features for a B2B SaaS platform in Laravel and Vue.js: fast product search via Typesense, dynamic pricing and ordering, secure REST API integrations (QuickBooks, Freightcom, OpenAI, Chatwoot), CI/CD with PHPUnit, Laravel Dusk, and GitHub Actions. Owned an application-wide user roles system and a migration to bidirectional API sync.
+- **Software Developer, Fractionl** (Sep 2025–Present, Toronto, ON) — Full-stack features for a B2B SaaS platform in Laravel and Vue.js: fast product search via Typesense, dynamic pricing and ordering, secure REST API integrations (QuickBooks, Freightcom, OpenAI, Chatwoot), CI/CD with PHPUnit, Laravel Dusk, and GitHub Actions. Owned an application-wide user roles system and a migration to bidirectional API sync.
 - **IoT Developer, Magna International** (Sep 2024–Sep 2025, Vaughan, ON; preceded by an internship from May 2024) — Connected hundreds of manufacturing machines via MQTT, OPC-UA, Modbus, and MTConnect into Node.js APIs; built React/Grafana dashboards backed by InfluxDB; built Python (scikit-learn) predictive maintenance models for CNC tool wear; led industrial connectivity deployment across hundreds of machines.
 - **Graduate Teaching Assistant, University of Ottawa** (Sep 2023–Dec 2024, Ottawa, ON) — Led lab sessions for 50+ students in digital and analog circuit design.
-- **Web and Software Developer, Patio Concepts** (Jan 2021–Sep 2022, Richmond Hill, ON) — Maintained Nuxt.js/Three.js e-commerce sites serving 15k+ monthly visitors, backed by a Laravel API with Stripe and Shopify integrations.
+- **Web and Software Developer, Patio Concepts** (Jan 2021–Sep 2022, Toronto, ON) — Maintained Nuxt.js/Three.js e-commerce sites serving 15k+ monthly visitors, backed by a Laravel API integrating the Stripe and Shopify APIs.
 - **IT Student (Co-op), Magna International** (May 2020–Aug 2020, Vaughan, ON; preceded by an IT Analyst role May 2019–Apr 2020) — IT infrastructure projects and Python automation of AWS S3 environments.
 
 ## Skills
@@ -25,7 +25,7 @@ Contact: aiannantuono@me.com · GitHub: https://github.com/adrianiannantuono · 
 
 ## Projects
 
-- **Factory Flow** (https://factoryflow.io) — Real-time manufacturing analytics platform. Cross-platform industrial gateway (Electron + React) normalizing OPC-UA, MQTT, Modbus, and MTConnect into a unified API; analytics pipelines computing OEE, uptime, and cycle efficiency; production infrastructure on Docker, Cloudflare Tunnels, PostgreSQL, Redis, Stripe.
+- **Factory Flow** (https://factoryflow.io) — Real-time manufacturing analytics platform. Cross-platform industrial gateway (Electron + React) normalizing OPC-UA, MQTT, Modbus, and MTConnect into a unified API; analytics pipelines computing OEE, uptime, and cycle efficiency; production infrastructure on Docker, Cloudflare Tunnels, PostgreSQL, Redis, the Stripe API.
 - **Portfolio Website** (https://adrianiannantuono.ca) — This site: React/TypeScript/Vite with a resume-driven data layer, live search and filtering, light/dark theming, built with Radix UI and Tailwind CSS.
 - **Pose Estimation and Digit Recognition for Automated IC Chip Testing** (M.Eng project) — Classical machine-vision system to detect misplaced IC chips via pose estimation, plus an automated digit-recognition pipeline for serial number extraction.
 - **Sensor-Based Fuzzy Control of a 4-Legged Robot** (M.Eng project) — Simulated a quadruped robot using fuzzy logic and foot-mounted contact sensors for stability on uneven terrain, in MATLAB/Simulink.
@@ -36,7 +36,7 @@ Contact: aiannantuono@me.com · GitHub: https://github.com/adrianiannantuono · 
 ## Education
 
 - **Master's in Electrical & Computer Engineering (M.Eng)**, University of Ottawa, 2023–2025, GPA 3.9/4.0
-- **Bachelor's in Computer Engineering (B.A.Sc)**, University of Ottawa, 2018–2023, co-op program, graduated with distinction
+- **Bachelor's in Computer Engineering (B.A.Sc, Co-op)**, University of Ottawa, 2018–2023, graduated with distinction
 
 ## Notes for AI agents
 

@@ -17,13 +17,19 @@ import { Input } from '@/components/ui/input'
 import { type Course, education } from '@/data/resume'
 import { viewProject } from '@/lib/sectionEvents'
 
+/** "2023" → "2025" as "2 yrs" — elapsed calendar years between the two, floored at 1. */
+function formatYearDuration(start: string, end: string): string {
+  const years = Math.max(1, Number(end) - Number(start))
+  return `${years} yr${years > 1 ? 's' : ''}`
+}
+
 export function Education() {
   return (
     <section id="education" className="scroll-mt-14 py-12">
       <SectionHeading>Education</SectionHeading>
       <div className="relative">
-        <div className="absolute top-2 bottom-2 left-8 w-px bg-border" aria-hidden />
-        <div className="space-y-8">
+        <div className="absolute top-2 bottom-2 left-6 w-px bg-border sm:left-8" aria-hidden />
+        <div className="space-y-6 sm:space-y-8">
           {education.map((entry, i) => (
             <Reveal key={entry.degree} delay={i * 80}>
               <EducationItem entry={entry} />
@@ -41,8 +47,8 @@ function EducationItem({ entry }: { entry: (typeof education)[number] }) {
   const hasCourses = (entry.courses?.length ?? 0) > 0
 
   return (
-    <div className="relative flex gap-5">
-      <div className="relative z-10 flex size-16 shrink-0 items-center justify-center rounded-full border border-border bg-white p-2.5 text-brand">
+    <div className="relative flex gap-3 sm:gap-5">
+      <div className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full border border-border bg-white p-2 text-brand sm:size-16 sm:p-2.5">
         {entry.logo ? (
           <img
             src={entry.logo}
@@ -50,18 +56,18 @@ function EducationItem({ entry }: { entry: (typeof education)[number] }) {
             className="max-h-full max-w-full object-contain"
           />
         ) : (
-          <GraduationCap className="size-7" />
+          <GraduationCap className="size-5 sm:size-7" />
         )}
       </div>
-      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="min-w-0 flex-1 pt-2">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="min-w-0 flex-1 pt-1 sm:pt-2">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 sm:gap-x-4">
           <h3 className="font-medium">{entry.degree}</h3>
           <p className="text-sm whitespace-nowrap text-muted-foreground">
             {entry.start} — {entry.end}
           </p>
         </div>
         <p className="text-sm text-muted-foreground">
-          {entry.school} · {entry.location}
+          {entry.school} · {entry.location} · {formatYearDuration(entry.start, entry.end)}
         </p>
         <p className="mt-2 text-sm leading-relaxed">{entry.detail}</p>
 

@@ -110,8 +110,8 @@ const skillIcons: Record<string, IconConfig> = {
   Grafana: { Icon: SiGrafana, brand: true },
   'Nuxt.js': { Icon: SiNuxt, brand: true },
   'Three.js': { Icon: SiThreedotjs, brand: true },
-  Stripe: { Icon: SiStripe, brand: true },
-  Shopify: { Icon: SiShopify, brand: true },
+  'Stripe API': { Icon: SiStripe, brand: true },
+  'Shopify API': { Icon: SiShopify, brand: true },
   Webpack: { Icon: SiWebpack, brand: true },
   'Computer Vision': { Icon: Eye },
   'Machine Learning': { Icon: BrainCircuit },
@@ -174,6 +174,7 @@ export function SkillChip({
           )}
           <p className="font-medium">{skill.name}</p>
         </div>
+        {skill.subcategory && <p className="text-[11px] text-muted-foreground/70">{skill.subcategory}</p>}
         {skill.description && (
           <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{skill.description}</p>
         )}

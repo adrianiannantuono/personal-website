@@ -1,13 +1,13 @@
 export const profile = {
   name: 'Adrian Iannantuono',
   credentials: 'M.Eng, B.A.Sc',
-  title: 'Software Engineer',
+  title: 'Software Developer',
   location: 'Toronto, ON',
   email: 'aiannantuono@me.com',
   github: 'https://github.com/adrianiannantuono',
   linkedin: 'https://www.linkedin.com/in/adrianiannantuono/',
   summary:
-    "Software engineer with 3+ years of experience and a Master's in Electrical and Computer Engineering. I build and maintain production SaaS and industrial systems, with a focus on full-stack development, automation, and data-driven applications.",
+    "Software developer with 3+ years of experience and a Master's in Electrical and Computer Engineering. I build and maintain production SaaS and industrial systems, with a focus on full-stack development, automation, and data-driven applications.",
 }
 
 export type Position = {
@@ -49,7 +49,7 @@ export const experience: ExperienceEntry[] = [
     start: 'Sep 2025',
     end: 'Present',
     summary:
-      'Building full-stack features for a B2B SaaS platform with Laravel and Vue.js — fast search via Typesense, secure REST APIs, and CI through GitHub Actions.',
+      'Building full-stack features for a B2B e-commerce SaaS platform with Laravel and Vue.js — fast search via Typesense, secure REST APIs, and CI through GitHub Actions.',
     bullets: [
       'Developed and enhanced full-stack features for a production B2B SaaS platform using Laravel and Vue.js, enabling fast product search, dynamic pricing, and ordering workflows across catalogs containing thousands of vehicle parts.',
       'Designed and maintained secure REST API integrations for product, inventory, and order synchronization across internal systems, QuickBooks, and third-party APIs (Freightcom, OpenAI translations, Chatwoot).',
@@ -105,20 +105,20 @@ export const experience: ExperienceEntry[] = [
     role: 'Web and Software Developer',
     company: 'Patio Concepts',
     logo: '/logos/patio-concepts.png',
-    location: 'Richmond Hill, ON',
+    location: 'Toronto, ON',
     start: 'Jan 2021',
     end: 'Sep 2022',
     summary:
-      'Maintained and grew Nuxt.js and Three.js e-commerce sites serving 15k+ visitors a month, backed by a Laravel API with Stripe and Shopify integrations, bundled with Webpack.',
+      'Maintained and grew Nuxt.js and Three.js e-commerce sites serving 15k+ visitors a month, backed by a Laravel API integrating the Stripe and Shopify APIs, bundled with Webpack.',
     bullets: [
       'Maintained and enhanced e-commerce websites generating 15k+ monthly visits.',
       'Improved a 3D product viewer by optimizing it for mobile and dynamically generating product dimensions.',
       'Led development of a custom application to parse and store existing site content ahead of a website upgrade, reducing migration errors, and integrated APIs to replace the existing payment solution.',
       'Ran weekly sprints and gave managers regular updates on progress and obstacles.',
       'Built a script to parse and save website content, reducing the risk of human error when migrating it to the company’s new site.',
-      'Used JavaScript (Nuxt.js, Three.js), HTML/CSS, Bootstrap, Python, SQL, PHP (Laravel), Stripe/Shopify/Snipcart APIs, Webpack, and Netlify.',
+      'Used JavaScript (Nuxt.js, Three.js), HTML/CSS, Bootstrap, Python, SQL, PHP (Laravel), Stripe API, Shopify API, Snipcart API, Webpack, and Netlify.',
     ],
-    tags: ['Nuxt.js', 'Three.js', 'Laravel', 'Stripe', 'Shopify', 'Webpack'],
+    tags: ['Nuxt.js', 'Three.js', 'Laravel', 'Stripe API', 'Shopify API', 'Webpack'],
   },
   {
     role: 'IT Student (Co-op)',
@@ -158,7 +158,7 @@ export const experience: ExperienceEntry[] = [
     role: 'Office Support (Part-time)',
     company: 'Artech Images',
     logo: '/logos/artech-logo-black.svg',
-    location: 'Richmond Hill, ON',
+    location: 'Toronto, ON',
     start: 'Aug 2016',
     end: 'Aug 2018',
     summary: 'Customer-facing office support at a photography and imaging studio.',
@@ -208,9 +208,9 @@ export const projects: ProjectEntry[] = [
       'Real-time manufacturing analytics platform ingesting and visualizing part counts, cycle times, downtime, and production performance.',
       'Cross-platform industrial gateway (Electron + React) supporting OPC-UA, MQTT, Modbus, and MTConnect, normalizing protocols into a unified API.',
       'Analytics pipelines and scheduled jobs turning raw machine events into KPIs — utilization, uptime, downtime, cycle efficiency, and OEE.',
-      'Production infrastructure on Docker, Cloudflare Tunnels, PostgreSQL, and Redis, with observability, monitoring, payments, and docs via Nightwatch, Better Stack, Stripe, and Mintlify.',
+      'Production infrastructure on Docker, Cloudflare Tunnels, PostgreSQL, and Redis, with observability, monitoring, payments, and docs via Nightwatch, Better Stack, the Stripe API, and Mintlify.',
     ],
-    images: ['/projects/factory-flow/1.png'],
+    images: ['/projects/factory-flow/factory-flow-dashboard.png'],
   },
   {
     name: 'Pose Estimation and Digit Recognition for Automated IC Chip Testing',
@@ -237,6 +237,18 @@ export const projects: ProjectEntry[] = [
     images: ['/projects/parts-sorting/parts-sorting.png', '/projects/parts-sorting/parts-sorting-report.pdf'],
   },
   {
+    name: 'Image Edge Detection Using Fuzzy Logic',
+    context: 'University of Ottawa · ELG 5378 Image Processing Course Project',
+    experience: 'uOttawa · Masters (M.Eng)',
+    category: 'Computer Vision & Machine Learning',
+    tags: ['MATLAB', 'Fuzzy Logic', 'Image Processing', 'Computer Vision'],
+    bullets: [
+      'Designed a fuzzy-logic-based edge detection algorithm using first-order derivatives of pixel values, implemented in MATLAB.',
+      'Benchmarked results against Sobel, Prewitt, Roberts, LoG, zero-cross, and Canny edge detectors through visual inspection and entropy calculations.',
+    ],
+    images: ['/projects/fuzzy-logic-image-edge-detection/fuzzy-logic-edge-detection.png', '/projects/fuzzy-logic-image-edge-detection/Edge_Detection_Using_Fuzzy_Logic_Final_Report.pdf'],
+  },
+  {
     name: 'Sensor-Based Fuzzy Control of a 4-Legged Robot',
     context: 'University of Ottawa · M.Eng Project',
     experience: 'uOttawa · Masters (M.Eng)',
@@ -249,6 +261,18 @@ export const projects: ProjectEntry[] = [
     images: ['/projects/fuzzy-robot/fuzzy-robot.png', '/projects/fuzzy-robot/Sensor_based_Fuzzy_Control_of_a_Rigid_Bodied_4_Legged_Robot_M_Eng_Project_Adrian_Iannantuono_300071774.pdf', '/projects/fuzzy-robot/Sensor-based Fuzzy Control of a 4-Legged Robot - M.Eng. Project - Adrian Iannantuono 300071774.pdf'],
   },
   {
+    name: 'Thermal Analysis of a Flip-chip Package',
+    context: 'University of Ottawa · ELG 7132 Topics in Electronics Course Project',
+    experience: 'uOttawa · Masters (M.Eng)',
+    category: 'Hardware & Electronics',
+    tags: ['Ansys Mechanical', 'Thermal Analysis', 'Electronics Packaging'],
+    bullets: [
+      'Modeled a flip-chip package in Ansys Mechanical to study how solder, underfill, lid, and TIM (Thermal Interface Material) choices affect thermal performance.',
+      'Analyzed the effect of loading parameters (power, convection, radiation emissivity) and geometric parameters (lid, TIM, substrate, and silicon thickness) on package thermal behavior.',
+    ],
+    images: ['/projects/flip-chip-thermal-analysis/flip-chip.png', '/projects/flip-chip-thermal-analysis/Thermal_Project_Summer2024_Final Version.pdf'],
+  },
+  {
     name: 'Portable Air Quality Monitor',
     context: 'University of Ottawa · Capstone Project · with the City of Ottawa',
     experience: 'uOttawa · Bachelors (B.A.Sc)',
@@ -258,7 +282,13 @@ export const projects: ProjectEntry[] = [
       'Built a prototype portable pollution monitor measuring CO2, PM2.5, GPS location, temperature, and humidity, with built-in capability to charge personal devices.',
       'Built a custom backend REST API that automatically ingested sensor data for visualization in a React web app.',
     ],
-    images: ['/projects/air-quality-monitor/1.svg', '/projects/air-quality-monitor/2.svg'],
+    images: [
+      '/projects/air-quality-monitor/air-quality-1.png',
+      '/projects/air-quality-monitor/air-quality-2.png',
+      '/projects/air-quality-monitor/air-quality-3.png',
+      '/projects/air-quality-monitor/air-quality-4.png',
+      '/projects/air-quality-monitor/GNG5140 - Deliverable F.pdf',
+    ],
   },
   {
     name: 'ParkAid: AI Street Parking Detection',
@@ -282,10 +312,10 @@ export const projects: ProjectEntry[] = [
       'Reviewed how quantum dot solar cells use tunable bandgaps and multiple exciton generation to exceed the efficiency limits of conventional silicon cells.',
       'Analyzed key barriers to real-world performance, including manufacturing defects, toxic materials, and fabrication complexity.',
     ],
-    images: ['/projects/quantum-dot/1.svg', '/projects/quantum-dot/2.svg'],
+    images: ['/projects/quantum-dot/quantum-dot.png', '/projects/quantum-dot/F24_ELG6380_TermPaperManuscript_RasheeqM_AdrianI.pdf'],
   },
   {
-    name: 'Literature Review: Perovskite Semiconductors in Photovoltaic Cells',
+    name: 'Perovskite Semiconductors in Photovoltaic Cells',
     context: 'University of Ottawa · Literature Review',
     experience: 'uOttawa · Masters (M.Eng)',
     category: 'Research & Literature Review',
@@ -294,7 +324,7 @@ export const projects: ProjectEntry[] = [
       'Reviewed the rapid efficiency gains of perovskite-based photovoltaic cells and the techniques driving them.',
       'Examined material instability challenges and future research directions, including curved and semi-transparent installations.',
     ],
-    images: ['/projects/perovskite/1.svg', '/projects/perovskite/2.svg'],
+    images: ['/projects/perovskite/perovskite-1.png', '/projects/perovskite/Literature Review_Perovskite Semiconductors in Photovoltaic Cells_2023.pdf'],
   },
   {
     name: 'COVID-19 Screening Web Application',
@@ -355,6 +385,9 @@ export type Skill = {
   description?: string
   /** Companies or projects where this was used in practice, most recent first. */
   usedIn?: string[]
+  /** Finer grouping within the skill's category (e.g. Backend → "Commerce Integrations") — purely
+   *  organizational, used to cluster and order chips within a category's row. */
+  subcategory?: string
 }
 
 /** Loosely compares a skill name against bullet text — case/punctuation/plural-insensitive. */
@@ -425,23 +458,32 @@ const curatedSkills: SkillGroup[] = [
         name: 'Laravel',
         description: 'Primary framework for production APIs, admin tooling, and background jobs.',
         usedIn: ['Fractionl', 'Factory Flow'],
+        subcategory: 'Frameworks',
       },
-      { name: 'PHP', description: 'Language behind the Laravel applications I maintain.', usedIn: ['Fractionl'] },
+      {
+        name: 'PHP',
+        description: 'Language behind the Laravel applications I maintain.',
+        usedIn: ['Fractionl'],
+        subcategory: 'Frameworks',
+      },
       {
         name: 'Node.js',
         description: 'Real-time APIs for collecting and serving industrial machine data.',
         usedIn: ['Magna International'],
+        subcategory: 'Frameworks',
       },
       {
         name: 'REST APIs',
         description: 'Designed and secured integrations across internal and third-party systems.',
         usedIn: ['Fractionl', 'Magna International'],
+        subcategory: 'APIs',
       },
-      { name: 'GraphQL' },
+      { name: 'GraphQL', subcategory: 'APIs' },
       {
         name: 'Typesense',
         description: 'Schema design, indexing, and normalization for fast catalog search.',
         usedIn: ['Fractionl'],
+        subcategory: 'Data & Search',
       },
     ],
   },
@@ -453,131 +495,157 @@ const curatedSkills: SkillGroup[] = [
         name: 'React',
         description: 'Dashboards and product UIs, from live machine metrics to part catalogs.',
         usedIn: ['Magna International', 'Factory Flow'],
+        subcategory: 'Frameworks',
       },
       {
         name: 'Vue.js',
         description: "Frontend for a B2B SaaS platform's search, pricing, and ordering flows.",
         usedIn: ['Fractionl'],
+        subcategory: 'Frameworks',
       },
-      { name: 'TypeScript' },
-      { name: 'JavaScript', usedIn: ['Patio Concepts'] },
-      { name: 'HTML/CSS', usedIn: ['Patio Concepts'] },
+      { name: 'TypeScript', subcategory: 'Languages & Styling' },
+      { name: 'JavaScript', usedIn: ['Patio Concepts'], subcategory: 'Languages & Styling' },
+      { name: 'HTML/CSS', usedIn: ['Patio Concepts'], subcategory: 'Languages & Styling' },
     ],
   },
   {
     category: 'Databases',
     blurb: 'Relational, time-series, and search-optimized storage.',
     items: [
-      { name: 'PostgreSQL', usedIn: ['Factory Flow'] },
+      { name: 'PostgreSQL', usedIn: ['Factory Flow'], subcategory: 'Relational' },
+      { name: 'MySQL', subcategory: 'Relational' },
+      { name: 'SQL', usedIn: ['Patio Concepts'], subcategory: 'Relational' },
       {
         name: 'TimescaleDB',
         description: 'Time-series storage for high-frequency manufacturing metrics.',
         usedIn: ['Factory Flow'],
+        subcategory: 'Time-Series',
       },
-      { name: 'MySQL' },
       {
         name: 'InfluxDB',
         description: 'Stored vibration and sensor data streamed from shop-floor equipment.',
         usedIn: ['Magna International'],
+        subcategory: 'Time-Series',
       },
-      { name: 'SQL', usedIn: ['Patio Concepts'] },
     ],
   },
   {
     category: 'Cloud & DevOps',
     blurb: 'Shipping, testing, and observability for production systems.',
     items: [
-      { name: 'Docker', usedIn: ['Factory Flow'] },
-      { name: 'Git' },
+      { name: 'Git', subcategory: 'Source Control & CI/CD' },
       {
         name: 'GitHub Actions',
         description: 'CI pipelines validating critical workflows on every pull request.',
         usedIn: ['Fractionl'],
+        subcategory: 'Source Control & CI/CD',
       },
-      { name: 'CircleCI' },
-      {
-        name: 'Laravel Nightwatch',
-        description: 'Production monitoring and observability for a self-hosted SaaS platform.',
-        usedIn: ['Factory Flow'],
-      },
+      { name: 'CircleCI', subcategory: 'Source Control & CI/CD' },
+      { name: 'Docker', usedIn: ['Factory Flow'], subcategory: 'Infrastructure & Observability' },
       {
         name: 'AWS (S3)',
         description: 'Automated large-scale dataset management during an IT co-op term.',
         usedIn: ['Magna International'],
+        subcategory: 'Infrastructure & Observability',
+      },
+      {
+        name: 'Laravel Nightwatch',
+        description: 'Production monitoring and observability for a self-hosted SaaS platform.',
+        usedIn: ['Factory Flow'],
+        subcategory: 'Infrastructure & Observability',
       },
     ],
   },
   {
     category: 'Industrial Systems',
-    blurb: 'Protocols connecting shop-floor machines to software.',
+    blurb: 'Protocols connecting shop-floor machines to software, and the hardware behind them.',
     items: [
-      { name: 'OPC-UA', usedIn: ['Magna International', 'Factory Flow'] },
-      { name: 'MQTT', usedIn: ['Magna International', 'Factory Flow'] },
-      { name: 'Modbus', usedIn: ['Magna International', 'Factory Flow'] },
-      { name: 'MTConnect', usedIn: ['Magna International', 'Factory Flow'] },
-      { name: 'Node-RED' },
+      { name: 'OPC-UA', usedIn: ['Magna International', 'Factory Flow'], subcategory: 'Connectivity Protocols' },
+      { name: 'MQTT', usedIn: ['Magna International', 'Factory Flow'], subcategory: 'Connectivity Protocols' },
+      { name: 'Modbus', usedIn: ['Magna International', 'Factory Flow'], subcategory: 'Connectivity Protocols' },
+      { name: 'MTConnect', usedIn: ['Magna International', 'Factory Flow'], subcategory: 'Connectivity Protocols' },
+      { name: 'Node-RED', subcategory: 'Connectivity Protocols' },
     ],
   },
   {
     category: 'Professional',
-    blurb: 'How I work day to day.',
+    blurb: 'How I work day to day, and the technical domains I work in.',
     items: [
       {
         name: 'Production Debugging',
         description: 'Tracing and fixing issues in live systems without breaking existing workflows.',
         usedIn: ['Fractionl'],
+        subcategory: 'Engineering Practice',
       },
       {
         name: 'System Design',
         description: 'Owned end-to-end architecture for major features, like a roles system and bidirectional sync.',
         usedIn: ['Fractionl'],
+        subcategory: 'Engineering Practice',
       },
       {
         name: 'Automated Testing',
         description: 'Led adoption of PHPUnit, Laravel Dusk, and CI pipelines.',
         usedIn: ['Fractionl'],
+        subcategory: 'Engineering Practice',
       },
       {
         name: 'Technical Documentation',
         description: 'API specs, lab guides, and tool documentation for technical and non-technical audiences.',
         usedIn: ['Magna International', 'University of Ottawa'],
+        subcategory: 'Engineering Practice',
       },
     ],
   },
 ]
 
 /**
- * Category to file a tag under when it turns up as an Experience/Project tag but has no
- * hand-written entry (with description) in `curatedSkills` above. Keeps the Skills section
+ * Category + subcategory to file a tag under when it turns up as an Experience/Project tag but
+ * has no hand-written entry (with description) in `curatedSkills` above. Keeps the Skills section
  * a complete, auto-updating picture instead of one that silently drifts out of date.
  */
-const autoSkillCategory: Record<string, string> = {
-  IoT: 'Industrial Systems',
-  Grafana: 'Cloud & DevOps',
-  Webpack: 'Cloud & DevOps',
-  Firebase: 'Cloud & DevOps',
-  'Nuxt.js': 'Frontend',
-  'Three.js': 'Frontend',
-  Electron: 'Frontend',
-  Ionic: 'Frontend',
-  Vite: 'Frontend',
-  'Tailwind CSS': 'Frontend',
-  Python: 'Backend',
-  Stripe: 'Backend',
-  Shopify: 'Backend',
-  Express: 'Backend',
-  OpenCV: 'Backend',
-  Arduino: 'Industrial Systems',
-  'PCB Design': 'Industrial Systems',
-  Eagle: 'Industrial Systems',
-  'Computer Vision': 'Professional',
-  'Machine Learning': 'Professional',
-  MATLAB: 'Professional',
-  Simulink: 'Professional',
-  'Fuzzy Logic': 'Professional',
-  Robotics: 'Professional',
-  Photovoltaics: 'Professional',
-  Research: 'Professional',
+const autoSkillPlacement: Record<string, { category: string; subcategory: string }> = {
+  IoT: { category: 'Industrial Systems', subcategory: 'Connectivity Protocols' },
+  Grafana: { category: 'Cloud & DevOps', subcategory: 'Infrastructure & Observability' },
+  Webpack: { category: 'Cloud & DevOps', subcategory: 'Build & Platform Services' },
+  Firebase: { category: 'Cloud & DevOps', subcategory: 'Build & Platform Services' },
+  'Nuxt.js': { category: 'Frontend', subcategory: 'Frameworks' },
+  'Three.js': { category: 'Frontend', subcategory: 'Graphics & Native Shells' },
+  Electron: { category: 'Frontend', subcategory: 'Graphics & Native Shells' },
+  Ionic: { category: 'Frontend', subcategory: 'Graphics & Native Shells' },
+  Vite: { category: 'Frontend', subcategory: 'Build Tools' },
+  'Tailwind CSS': { category: 'Frontend', subcategory: 'Languages & Styling' },
+  Python: { category: 'Backend', subcategory: 'Data & Search' },
+  'Stripe API': { category: 'Backend', subcategory: 'Commerce Integrations' },
+  'Shopify API': { category: 'Backend', subcategory: 'Commerce Integrations' },
+  Express: { category: 'Backend', subcategory: 'Frameworks' },
+  OpenCV: { category: 'Backend', subcategory: 'Data & Search' },
+  Arduino: { category: 'Industrial Systems', subcategory: 'Hardware & Electronics' },
+  'PCB Design': { category: 'Industrial Systems', subcategory: 'Hardware & Electronics' },
+  Eagle: { category: 'Industrial Systems', subcategory: 'Hardware & Electronics' },
+  'Ansys Mechanical': { category: 'Industrial Systems', subcategory: 'Hardware & Electronics' },
+  'Thermal Analysis': { category: 'Industrial Systems', subcategory: 'Hardware & Electronics' },
+  'Electronics Packaging': { category: 'Industrial Systems', subcategory: 'Hardware & Electronics' },
+  'Computer Vision': { category: 'Professional', subcategory: 'AI & Computer Vision' },
+  'Image Processing': { category: 'Professional', subcategory: 'AI & Computer Vision' },
+  'Machine Learning': { category: 'Professional', subcategory: 'AI & Computer Vision' },
+  MATLAB: { category: 'Professional', subcategory: 'Simulation, Controls & Robotics' },
+  Simulink: { category: 'Professional', subcategory: 'Simulation, Controls & Robotics' },
+  'Fuzzy Logic': { category: 'Professional', subcategory: 'Simulation, Controls & Robotics' },
+  Robotics: { category: 'Professional', subcategory: 'Simulation, Controls & Robotics' },
+  Photovoltaics: { category: 'Professional', subcategory: 'Research Domains' },
+  Research: { category: 'Professional', subcategory: 'Research Domains' },
+}
+
+/** Display order for each category's subcategories — anything unmapped (a brand-new tag with no
+ *  placement above) sorts to the end rather than breaking the build. */
+const subcategoryOrder: Record<string, string[]> = {
+  Backend: ['Frameworks', 'APIs', 'Data & Search', 'Commerce Integrations'],
+  Frontend: ['Frameworks', 'Languages & Styling', 'Build Tools', 'Graphics & Native Shells'],
+  Databases: ['Relational', 'Time-Series'],
+  'Cloud & DevOps': ['Source Control & CI/CD', 'Infrastructure & Observability', 'Build & Platform Services'],
+  'Industrial Systems': ['Connectivity Protocols', 'Hardware & Electronics'],
+  Professional: ['Engineering Practice', 'AI & Computer Vision', 'Simulation, Controls & Robotics', 'Research Domains'],
 }
 
 function buildSkills(): SkillGroup[] {
@@ -602,8 +670,9 @@ function buildSkills(): SkillGroup[] {
   for (const [tag, usedIn] of sources) {
     if (known.has(tag)) continue
     known.add(tag)
-    const skill: Skill = { name: tag, usedIn: [...usedIn] }
-    const group = groups.find((g) => g.category === autoSkillCategory[tag])
+    const placement = autoSkillPlacement[tag]
+    const skill: Skill = { name: tag, usedIn: [...usedIn], subcategory: placement?.subcategory }
+    const group = groups.find((g) => g.category === placement?.category)
     if (group) group.items.push(skill)
     else other.push(skill)
   }
@@ -613,6 +682,18 @@ function buildSkills(): SkillGroup[] {
       category: 'Other',
       blurb: 'Additional tools picked up from projects and experience.',
       items: other,
+    })
+  }
+
+  // Cluster each category's chips by subcategory (stable sort — ties keep their original order,
+  // so curated items stay in the order written above and auto-discovered ones slot in after them).
+  for (const group of groups) {
+    const order = subcategoryOrder[group.category]
+    if (!order) continue
+    group.items.sort((a, b) => {
+      const ai = a.subcategory ? order.indexOf(a.subcategory) : -1
+      const bi = b.subcategory ? order.indexOf(b.subcategory) : -1
+      return (ai === -1 ? order.length : ai) - (bi === -1 ? order.length : bi)
     })
   }
 
@@ -693,6 +774,7 @@ export const education: EducationEntry[] = [
         description:
           'Image acquisition, sampling, and discrete representations, covering transformation, enhancement, restoration, analysis, and lossless/lossy image and video compression.',
         tags: ['Image Processing', 'Computer Vision', 'Video Compression'],
+        project: 'Image Edge Detection Using Fuzzy Logic',
       },
       {
         code: 'ELG5163',
@@ -728,11 +810,12 @@ export const education: EducationEntry[] = [
         description:
           'Special topics course on current developments in electronics — this offering focused on electronics packaging and manufacturing.',
         tags: ['Electronics Packaging', 'Manufacturing'],
+        project: 'Thermal Analysis of a Flip-chip Package',
       },
     ],
   },
   {
-    degree: "Bachelor's in Computer Engineering (B.A.Sc)",
+    degree: "Bachelor's in Computer Engineering (B.A.Sc, Co-op)",
     school: 'University of Ottawa',
     logo: '/logos/uottawa.svg',
     location: 'Ottawa, ON',

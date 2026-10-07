@@ -112,8 +112,8 @@ export function Experience() {
     <section id="experience" className="scroll-mt-14 py-12">
       <SectionHeading>Experience</SectionHeading>
       <div className="relative">
-        <div className="absolute top-2 bottom-2 left-8 w-px bg-border" aria-hidden />
-        <div className="space-y-8">
+        <div className="absolute top-2 bottom-2 left-6 w-px bg-border sm:left-8" aria-hidden />
+        <div className="space-y-6 sm:space-y-8">
           <Reveal>
             <ExperienceItem
               Icon={icons[current.company] ?? SquareTerminal}
@@ -137,7 +137,7 @@ export function Experience() {
               </div>
               <Collapsible open={showAll}>
                 <CollapsibleContent>
-                  <div className="space-y-8">
+                  <div className="space-y-6 sm:space-y-8">
                     {rest.map((job, i) => (
                       <Reveal key={`${job.company}-${job.role}`} delay={i * 80}>
                         <ExperienceItem
@@ -151,7 +151,7 @@ export function Experience() {
                     {earlier.length > 0 && (
                       <Collapsible open={showEarlier}>
                         <CollapsibleContent>
-                          <div className="space-y-8">
+                          <div className="space-y-6 sm:space-y-8">
                             {earlier.map((job, i) => (
                               <Reveal key={`${job.company}-${job.role}`} delay={i * 80}>
                                 <ExperienceItem
@@ -174,7 +174,7 @@ export function Experience() {
         </div>
       </div>
       {showAll && earlier.length > 0 && (
-        <div className="mt-8 ml-[84px]">
+        <div className="mt-8 ml-[60px] sm:ml-[84px]">
           <ExpandToggle
             expanded={showEarlier}
             onClick={() => setShowEarlier((v) => !v)}
@@ -224,8 +224,8 @@ function ExperienceItem({
   const forceOpen = openRequest?.company === job.company ? openRequest.ts : undefined
 
   return (
-    <div ref={registerRef} className="relative flex gap-5 pl-0">
-      <div className="relative z-10 flex size-16 shrink-0 items-center justify-center rounded-full border border-border bg-white p-2.5 text-brand">
+    <div ref={registerRef} className="relative flex gap-3 pl-0 sm:gap-5">
+      <div className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full border border-border bg-white p-2 text-brand sm:size-16 sm:p-2.5">
         {job.logo ? (
           <img
             src={job.logo}
@@ -233,10 +233,10 @@ function ExperienceItem({
             className="max-h-full max-w-full object-contain"
           />
         ) : (
-          <Icon className="size-7" />
+          <Icon className="size-5 sm:size-7" />
         )}
       </div>
-      <div className="min-w-0 flex-1 pt-2">
+      <div className="min-w-0 flex-1 pt-1 sm:pt-2">
         <PositionBlock position={primaryPosition} company={job.company} forceOpen={forceOpen} />
 
         {earlierPositions.length > 0 && (
@@ -288,7 +288,7 @@ function PositionBlock({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 sm:gap-x-4">
         <h3 className="font-medium">
           {position.role} <span className="text-muted-foreground">· {company}</span>
         </h3>
