@@ -57,7 +57,14 @@ function SelectContent({
         )}
         {...props}
       >
-        <SelectPrimitive.Viewport className="max-h-[inherit] overflow-y-auto">{children}</SelectPrimitive.Viewport>
+        {/* Radix injects its own (unlayered) stylesheet hiding this viewport's native scrollbar —
+         *  it ships separate scroll-up/down button primitives instead — via a plain
+         *  `[data-radix-select-viewport]` rule. Tailwind's utilities live inside `@layer`, and an
+         *  unlayered rule beats a layered one regardless of specificity, so matching its selector
+         *  isn't enough; only `!important` (also exempt from layer ordering) can still win here. */}
+        <SelectPrimitive.Viewport className="max-h-[inherit] overflow-y-auto [scrollbar-color:var(--border)_transparent]! [scrollbar-width:thin]! [&::-webkit-scrollbar]:[display:block]! [&::-webkit-scrollbar]:w-1.5! [&::-webkit-scrollbar-thumb]:rounded-full! [&::-webkit-scrollbar-thumb]:bg-border! [&::-webkit-scrollbar-track]:bg-transparent!">
+          {children}
+        </SelectPrimitive.Viewport>
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
   )
@@ -91,7 +98,9 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-pointer items-center gap-2 rounded-lg py-1.5 pr-8 pl-2.5 text-sm outline-none select-none data-highlighted:bg-muted",
+        // py-3 (sm:py-1.5 once a mouse is the likely pointer) keeps each row at a full 44px
+        // touch target on mobile without bloating the desktop dropdown.
+        "relative flex w-full cursor-pointer items-center gap-2 rounded-lg py-3 pr-8 pl-2.5 text-sm outline-none select-none data-highlighted:bg-muted sm:py-1.5",
         className
       )}
       {...props}

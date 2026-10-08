@@ -1,6 +1,7 @@
 import { Moon, Sun } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 type Theme = 'light' | 'dark'
 
@@ -11,7 +12,15 @@ function getInitialTheme(): Theme {
   return 'light'
 }
 
-export function ThemeToggle() {
+export function ThemeToggle({
+  className,
+  /** Shows "Light mode"/"Dark mode" next to the icon — for use as a row inside a menu, rather than
+   *  a standalone icon button. */
+  showLabel,
+}: {
+  className?: string
+  showLabel?: boolean
+}) {
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
 
   useEffect(() => {
@@ -22,13 +31,21 @@ export function ThemeToggle() {
   return (
     <Button
       variant="ghost"
-      size="icon"
-      className="size-11"
+      size={showLabel ? 'default' : 'icon'}
+      className={cn(!showLabel && 'size-11', className)}
       aria-label="Toggle theme"
       onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
     >
-      <Sun className="size-5 scale-100 dark:scale-0" />
-      <Moon className="absolute size-5 scale-0 dark:scale-100" />
+      <span className="relative flex size-5 shrink-0 items-center justify-center">
+        <Sun className="absolute size-5 scale-100 dark:scale-0" />
+        <Moon className="absolute size-5 scale-0 dark:scale-100" />
+      </span>
+      {showLabel && (
+        <>
+          <span className="dark:hidden">Light mode</span>
+          <span className="hidden dark:inline">Dark mode</span>
+        </>
+      )}
     </Button>
   )
 }

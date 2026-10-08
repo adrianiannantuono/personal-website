@@ -1,7 +1,7 @@
-import { ChevronLeft, ChevronRight, X } from 'lucide-react'
-import { useEffect } from 'react'
+import { ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
-import { isPdf } from '@/components/projects/media'
+import { isPdf, pdfFileName } from '@/components/projects/media'
 import { cn } from '@/lib/utils'
 
 /** Full-screen viewer for a gallery image/PDF, with prev/next (click or arrow keys). */
@@ -17,6 +17,26 @@ export function ProjectLightbox({
   onIndexChange: (index: number | null) => void
 }) {
   const lightbox = index !== null ? images[index] : null
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0]
+    touchStart.current = { x: touch.clientX, y: touch.clientY }
+  }
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart.current || index === null) return
+    const touch = e.changedTouches[0]
+    const deltaX = touch.clientX - touchStart.current.x
+    const deltaY = touch.clientY - touchStart.current.y
+    touchStart.current = null
+
+    const SWIPE_THRESHOLD = 50
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD || Math.abs(deltaX) < Math.abs(deltaY)) return
+
+    if (deltaX > 0 && index > 0) onIndexChange(index - 1)
+    if (deltaX < 0 && index < images.length - 1) onIndexChange(index + 1)
+  }
 
   useEffect(() => {
     if (index === null) return
@@ -32,9 +52,13 @@ export function ProjectLightbox({
     <Dialog open={!!lightbox} onOpenChange={(isOpen) => !isOpen && onIndexChange(null)}>
       <DialogContent
         showCloseButton={false}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
         className={cn(
           'flex items-center justify-center border-0 bg-transparent p-0 ring-0',
-          lightbox && isPdf(lightbox) ? 'h-[90vh] w-[95vw] max-w-5xl sm:max-w-5xl' : 'h-auto w-auto max-w-[95vw] sm:max-w-[95vw]',
+          lightbox && isPdf(lightbox)
+            ? 'h-auto w-auto max-w-[95vw] sm:h-[90vh] sm:w-[95vw] sm:max-w-5xl'
+            : 'h-auto w-auto max-w-[95vw] sm:max-w-[95vw]',
         )}
       >
         <DialogTitle className="sr-only">
@@ -74,7 +98,27 @@ export function ProjectLightbox({
         )}
         {lightbox &&
           (isPdf(lightbox) ? (
-            <iframe src={lightbox} title={`${projectName} document`} className="size-full rounded-lg bg-white" />
+            <>
+              {/* Mobile browsers render embedded PDFs at native size, ignoring the iframe's
+               *  box, which pushes the page off screen and breaks scrolling. Hand off to the
+               *  OS's own PDF viewer there instead and keep the inline iframe for larger screens. */}
+              <iframe
+                src={lightbox}
+                title={`${projectName} document`}
+                className="hidden size-full rounded-lg bg-white sm:block"
+              />
+              <a
+                href={lightbox}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-72 flex-col items-center justify-center gap-3 rounded-lg bg-white p-10 text-foreground sm:hidden"
+              >
+                <ExternalLink className="size-8 text-muted-foreground" />
+                <span className="text-center text-sm font-medium">{pdfFileName(lightbox)}</span>
+                <span className="text-sm font-medium text-primary">Open PDF</span>
+                <span className="text-center text-xs text-muted-foreground">Opens in your device's PDF viewer</span>
+              </a>
+            </>
           ) : (
             <img src={lightbox} alt="" className="max-h-[90vh] max-w-[95vw] rounded-lg object-contain" />
           ))}

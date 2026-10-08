@@ -1,4 +1,4 @@
-import { Camera, ShoppingBag, SquareTerminal, type LucideIcon } from 'lucide-react'
+import { Camera, ChevronDown, ShoppingBag, SquareTerminal, type LucideIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { SectionHeading } from '@/components/SectionHeading'
 import { ExpandToggle } from '@/components/ExpandToggle'
@@ -112,7 +112,10 @@ export function Experience() {
     <section id="experience" className="scroll-mt-14 py-12">
       <SectionHeading>Experience</SectionHeading>
       <div className="relative">
-        <div className="absolute top-2 bottom-2 left-6 w-px bg-border sm:left-8" aria-hidden />
+        {/* On mobile each item centers its own icon and carries a short connector into the gap
+         *  below it instead (see `ExperienceItem`) — this continuous rail only fits the desktop
+         *  side-by-side layout, where every icon shares the same left offset. */}
+        <div className="absolute top-2 bottom-2 left-8 hidden w-px bg-border sm:block" aria-hidden />
         <div className="space-y-6 sm:space-y-8">
           <Reveal>
             <ExperienceItem
@@ -120,6 +123,7 @@ export function Experience() {
               job={current}
               registerRef={(el) => (itemRefs.current[current.company] = el)}
               openRequest={openRequest}
+              showConnector={rest.length > 0}
             />
           </Reveal>
           {rest.length > 0 && (
@@ -145,26 +149,37 @@ export function Experience() {
                           job={job}
                           registerRef={(el) => (itemRefs.current[job.company] = el)}
                           openRequest={openRequest}
+                          showConnector={i < rest.length - 1 || earlier.length > 0}
                         />
                       </Reveal>
                     ))}
                     {earlier.length > 0 && (
-                      <Collapsible open={showEarlier}>
-                        <CollapsibleContent>
-                          <div className="space-y-6 sm:space-y-8">
-                            {earlier.map((job, i) => (
-                              <Reveal key={`${job.company}-${job.role}`} delay={i * 80}>
-                                <ExperienceItem
-                                  Icon={icons[job.company] ?? SquareTerminal}
-                                  job={job}
-                                  registerRef={(el) => (itemRefs.current[job.company] = el)}
-                                  openRequest={openRequest}
-                                />
-                              </Reveal>
-                            ))}
-                          </div>
-                        </CollapsibleContent>
-                      </Collapsible>
+                      <>
+                        <TimelineToggle
+                          expanded={showEarlier}
+                          onClick={() => setShowEarlier((v) => !v)}
+                          expandedLabel="Hide earlier experience"
+                          collapsedLabel="Show earlier experience"
+                          showConnector={showEarlier}
+                        />
+                        <Collapsible open={showEarlier}>
+                          <CollapsibleContent>
+                            <div className="space-y-6 sm:space-y-8">
+                              {earlier.map((job, i) => (
+                                <Reveal key={`${job.company}-${job.role}`} delay={i * 80}>
+                                  <ExperienceItem
+                                    Icon={icons[job.company] ?? SquareTerminal}
+                                    job={job}
+                                    registerRef={(el) => (itemRefs.current[job.company] = el)}
+                                    openRequest={openRequest}
+                                    showConnector={i < earlier.length - 1}
+                                  />
+                                </Reveal>
+                              ))}
+                            </div>
+                          </CollapsibleContent>
+                        </Collapsible>
+                      </>
                     )}
                   </div>
                 </CollapsibleContent>
@@ -173,16 +188,6 @@ export function Experience() {
           )}
         </div>
       </div>
-      {showAll && earlier.length > 0 && (
-        <div className="mt-8 ml-[60px] sm:ml-[84px]">
-          <ExpandToggle
-            expanded={showEarlier}
-            onClick={() => setShowEarlier((v) => !v)}
-            expandedLabel="Hide earlier experience"
-            collapsedLabel="Show earlier experience"
-          />
-        </div>
-      )}
       {rest.length > 0 && (
         <ExpandToggle
           variant="line"
@@ -197,11 +202,53 @@ export function Experience() {
   )
 }
 
+/** A timeline node that's a toggle rather than a job — same circle-on-the-rail shape as
+ *  `ExperienceItem`'s logo, so "show earlier experience" reads as the next stop on the timeline
+ *  instead of a disconnected button floating below it. */
+function TimelineToggle({
+  expanded,
+  onClick,
+  expandedLabel,
+  collapsedLabel,
+  showConnector,
+}: {
+  expanded: boolean
+  onClick: () => void
+  expandedLabel: string
+  collapsedLabel: string
+  showConnector?: boolean
+}) {
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={onClick}
+        aria-expanded={expanded}
+        className="group flex w-full flex-col items-center gap-2 sm:flex-row sm:gap-5"
+      >
+        <span className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition-colors group-hover:border-brand/40 group-hover:text-brand sm:size-16">
+          <ChevronDown className={cn('size-4 transition-transform sm:size-5', expanded && 'rotate-180')} />
+        </span>
+        <span className="text-sm font-medium text-muted-foreground transition-colors group-hover:text-brand">
+          {expanded ? expandedLabel : collapsedLabel}
+        </span>
+      </button>
+      {showConnector && (
+        <div
+          className="absolute top-full left-1/2 mt-1.5 h-3 w-px -translate-x-1/2 bg-border sm:hidden"
+          aria-hidden
+        />
+      )}
+    </div>
+  )
+}
+
 function ExperienceItem({
   Icon,
   job,
   registerRef,
   openRequest,
+  showConnector,
 }: {
   Icon: LucideIcon
   job: ExperienceEntry
@@ -209,6 +256,9 @@ function ExperienceItem({
   registerRef?: (el: HTMLDivElement | null) => void
   /** Set when a skill popover asked to jump to this company's entry — forces its bullets open. */
   openRequest?: ExperienceOpenRequest | null
+  /** Whether another item follows this one — draws a short connector into the gap below, centered
+   *  under the (mobile-only, centered) icon, bridging to the next item's icon. */
+  showConnector?: boolean
 }) {
   const [showEarlierRoles, setShowEarlierRoles] = useState(false)
   const earlierPositions = job.earlierPositions ?? []
@@ -224,8 +274,8 @@ function ExperienceItem({
   const forceOpen = openRequest?.company === job.company ? openRequest.ts : undefined
 
   return (
-    <div ref={registerRef} className="relative flex gap-3 pl-0 sm:gap-5">
-      <div className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full border border-border bg-white p-2 text-brand sm:size-16 sm:p-2.5">
+    <div ref={registerRef} className="relative flex flex-col items-center gap-2 sm:flex-row sm:items-stretch sm:gap-5">
+      <div className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border border-border bg-white p-2 text-brand sm:size-16 sm:p-2.5">
         {job.logo ? (
           <img
             src={job.logo}
@@ -236,13 +286,20 @@ function ExperienceItem({
           <Icon className="size-5 sm:size-7" />
         )}
       </div>
-      <div className="min-w-0 flex-1 pt-1 sm:pt-2">
+      {showConnector && (
+        <div
+          className="absolute top-full left-1/2 mt-1.5 h-3 w-px -translate-x-1/2 bg-border sm:hidden"
+          aria-hidden
+        />
+      )}
+      <div className="w-full min-w-0 sm:flex-1 sm:pt-2">
         <PositionBlock position={primaryPosition} company={job.company} forceOpen={forceOpen} />
 
         {earlierPositions.length > 0 && (
           <Collapsible open={showEarlierRoles} onOpenChange={setShowEarlierRoles}>
             <CollapsibleTrigger asChild>
               <ExpandToggle
+                variant="line"
                 expanded={showEarlierRoles}
                 expandedLabel="See less"
                 collapsedLabel={`See more at ${job.company}`}
@@ -288,7 +345,7 @@ function PositionBlock({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 sm:gap-x-4">
+      <div className="flex flex-col items-center gap-1 text-center sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-x-4 sm:gap-y-1 sm:text-left">
         <h3 className="font-medium">
           {position.role} <span className="text-muted-foreground">· {company}</span>
         </h3>
@@ -296,7 +353,7 @@ function PositionBlock({
           {position.start} — {position.end}
         </p>
       </div>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-center text-sm text-muted-foreground sm:text-left">
         {[position.location, formatDuration(position.start, position.end)].filter(Boolean).join(' · ')}
       </p>
       {position.summary && (

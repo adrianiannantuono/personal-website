@@ -28,11 +28,14 @@ export function Education() {
     <section id="education" className="scroll-mt-14 py-12">
       <SectionHeading>Education</SectionHeading>
       <div className="relative">
-        <div className="absolute top-2 bottom-2 left-6 w-px bg-border sm:left-8" aria-hidden />
+        {/* On mobile each item centers its own icon and carries a short connector into the gap
+         *  below it instead (see `EducationItem`) — this continuous rail only fits the desktop
+         *  side-by-side layout, where every icon shares the same left offset. */}
+        <div className="absolute top-2 bottom-2 left-8 hidden w-px bg-border sm:block" aria-hidden />
         <div className="space-y-6 sm:space-y-8">
           {education.map((entry, i) => (
             <Reveal key={entry.degree} delay={i * 80}>
-              <EducationItem entry={entry} />
+              <EducationItem entry={entry} showConnector={i < education.length - 1} />
             </Reveal>
           ))}
         </div>
@@ -41,14 +44,22 @@ export function Education() {
   )
 }
 
-function EducationItem({ entry }: { entry: (typeof education)[number] }) {
+function EducationItem({
+  entry,
+  showConnector,
+}: {
+  entry: (typeof education)[number]
+  /** Whether another item follows this one — draws a short connector into the gap below, centered
+   *  under the (mobile-only, centered) icon, bridging to the next item's icon. */
+  showConnector?: boolean
+}) {
   const [isOpen, setIsOpen] = useState(false)
   const hasHighlights = (entry.highlights?.length ?? 0) > 0
   const hasCourses = (entry.courses?.length ?? 0) > 0
 
   return (
-    <div className="relative flex gap-3 sm:gap-5">
-      <div className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full border border-border bg-white p-2 text-brand sm:size-16 sm:p-2.5">
+    <div className="relative flex flex-col items-center gap-2 sm:flex-row sm:items-stretch sm:gap-5">
+      <div className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border border-border bg-white p-2 text-brand sm:size-16 sm:p-2.5">
         {entry.logo ? (
           <img
             src={entry.logo}
@@ -59,14 +70,20 @@ function EducationItem({ entry }: { entry: (typeof education)[number] }) {
           <GraduationCap className="size-5 sm:size-7" />
         )}
       </div>
-      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="min-w-0 flex-1 pt-1 sm:pt-2">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 sm:gap-x-4">
+      {showConnector && (
+        <div
+          className="absolute top-full left-1/2 mt-1.5 h-3 w-px -translate-x-1/2 bg-border sm:hidden"
+          aria-hidden
+        />
+      )}
+      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full min-w-0 sm:flex-1 sm:pt-2">
+        <div className="flex flex-col items-center gap-1 text-center sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-x-4 sm:gap-y-1 sm:text-left">
           <h3 className="font-medium">{entry.degree}</h3>
           <p className="text-sm whitespace-nowrap text-muted-foreground">
             {entry.start} — {entry.end}
           </p>
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-center text-sm text-muted-foreground sm:text-left">
           {entry.school} · {entry.location} · {formatYearDuration(entry.start, entry.end)}
         </p>
         <p className="mt-2 text-sm leading-relaxed">{entry.detail}</p>

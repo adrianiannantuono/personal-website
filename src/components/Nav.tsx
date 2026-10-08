@@ -53,10 +53,12 @@ export function Nav() {
                     {link.label}
                   </a>
                 ))}
+                <div className="my-1 h-px bg-border" aria-hidden />
+                <ThemeToggle showLabel className="h-11 w-full justify-start gap-3 rounded-lg px-3 text-sm font-normal text-foreground" />
               </nav>
             </PopoverContent>
           </Popover>
-          <ThemeToggle />
+          <ThemeToggle className="hidden sm:inline-flex" />
         </div>
       </div>
     </header>

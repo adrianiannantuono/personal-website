@@ -20,15 +20,6 @@ export function Footer() {
             <Mail className="size-5" />
           </a>
           <a
-            href={profile.github}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="GitHub"
-            className="rounded-lg p-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <GitHubIcon className="size-5" />
-          </a>
-          <a
             href={profile.linkedin}
             target="_blank"
             rel="noreferrer"
@@ -36,6 +27,15 @@ export function Footer() {
             className="rounded-lg p-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <LinkedInIcon className="size-5" />
+          </a>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub"
+            className="rounded-lg p-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <GitHubIcon className="size-5" />
           </a>
         </div>
         <p className="text-xs text-muted-foreground">

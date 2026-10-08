@@ -76,7 +76,9 @@ export function ExpandableSearch({
           aria-hidden={!expanded}
           tabIndex={expanded ? 0 : -1}
           className={cn(
-            'h-11 w-56 bg-background pl-11 pr-11 text-sm shadow-sm transition-opacity duration-150 sm:w-64',
+            // text-base (16px) prevents iOS Safari from auto-zooming the viewport on focus;
+            // zoom only kicks in below that size, so sm+ can safely drop back to text-sm.
+            'h-11 w-56 bg-background pl-11 pr-11 text-base shadow-sm transition-opacity duration-150 sm:w-64 sm:text-sm',
             expanded ? 'opacity-100' : 'pointer-events-none opacity-0',
           )}
         />
