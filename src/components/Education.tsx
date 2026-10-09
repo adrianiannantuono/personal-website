@@ -86,18 +86,20 @@ function EducationItem({
         <p className="text-center text-sm text-muted-foreground sm:text-left">
           {entry.school} · {entry.location} · {formatYearDuration(entry.start, entry.end)}
         </p>
-        <p className="mt-2 text-sm leading-relaxed">{entry.detail}</p>
-
-        {(hasHighlights || hasCourses) && (
-          <CollapsibleTrigger asChild>
-            <ExpandToggle
-              expanded={isOpen}
-              expandedLabel="Show less"
-              collapsedLabel="Show details"
-              className="mt-2"
-            />
-          </CollapsibleTrigger>
-        )}
+        <p className="mt-2 text-sm leading-relaxed">
+          {entry.detail}
+          {(hasHighlights || hasCourses) && (
+            <CollapsibleTrigger asChild>
+              <ExpandToggle
+                variant="inline"
+                expanded={isOpen}
+                expandedLabel="See less"
+                collapsedLabel="See more"
+                className="ml-1.5"
+              />
+            </CollapsibleTrigger>
+          )}
+        </p>
 
         {(hasHighlights || hasCourses) && (
           <CollapsibleContent>

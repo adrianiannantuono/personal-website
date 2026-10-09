@@ -15,9 +15,31 @@ export function ExpandToggle({
   expandedLabel: string
   collapsedLabel: string
   className?: string
-  /** 'line' spans the full width as a labeled divider — for a section's primary expand/collapse action. */
-  variant?: 'pill' | 'line'
+  /** 'line' spans the full width as a labeled divider — for a section's primary expand/collapse action.
+   *  'inline' is plain text + arrow meant to sit at the end of a sentence, flowing with the surrounding copy. */
+  variant?: 'pill' | 'line' | 'inline'
 }) {
+  if (variant === 'inline') {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={cn(
+          'group inline-flex items-center gap-0.5 align-baseline text-sm font-medium text-muted-foreground whitespace-nowrap transition-colors hover:text-brand hover:underline',
+          className,
+        )}
+      >
+        {expanded ? expandedLabel : collapsedLabel}
+        <ChevronDown
+          className={cn(
+            'size-3 shrink-0 transition-transform group-hover:translate-y-0.5',
+            expanded && 'rotate-180 group-hover:translate-y-0',
+          )}
+        />
+      </button>
+    )
+  }
+
   if (variant === 'line') {
     return (
       <button

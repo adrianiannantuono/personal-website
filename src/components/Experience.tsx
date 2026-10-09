@@ -359,28 +359,29 @@ function PositionBlock({
       {position.summary && (
         <p className="mt-2 text-sm leading-relaxed">
           <HighlightedText text={position.summary} tags={position.tags} size="sm" />
+          {hasBullets && (
+            <CollapsibleTrigger asChild>
+              <ExpandToggle
+                variant="inline"
+                expanded={isOpen}
+                expandedLabel="See less"
+                collapsedLabel="See more"
+                className="ml-1.5"
+              />
+            </CollapsibleTrigger>
+          )}
         </p>
       )}
       {hasBullets && (
-        <>
-          <CollapsibleTrigger asChild>
-            <ExpandToggle
-              expanded={isOpen}
-              expandedLabel="Show less"
-              collapsedLabel="Show details"
-              className="mt-2"
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-muted-foreground">
-              {position.bullets!.map((bullet, j) => (
-                <li key={j}>
-                  <HighlightedText text={bullet} tags={position.tags} size="sm" />
-                </li>
-              ))}
-            </ul>
-          </CollapsibleContent>
-        </>
+        <CollapsibleContent>
+          <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-muted-foreground">
+            {position.bullets!.map((bullet, j) => (
+              <li key={j}>
+                <HighlightedText text={bullet} tags={position.tags} size="sm" />
+              </li>
+            ))}
+          </ul>
+        </CollapsibleContent>
       )}
     </Collapsible>
   )
