@@ -49,7 +49,7 @@ export const experience: ExperienceEntry[] = [
     start: 'Sep 2025',
     end: 'Present',
     summary:
-      'Building full-stack features for a B2B e-commerce SaaS platform with Laravel and Vue.js — fast search via Typesense, secure REST APIs, and CI through GitHub Actions.',
+      'Building full-stack features for a B2B e-commerce platform with Laravel and Vue.js — fast search via Typesense, secure REST APIs, and CI through GitHub Actions.',
     bullets: [
       'Developed and enhanced full-stack features for a production B2B SaaS platform using Laravel and Vue.js, enabling fast product search, dynamic pricing, and ordering workflows across catalogs containing thousands of vehicle parts.',
       'Designed and maintained secure REST API integrations for product, inventory, and order synchronization across internal systems, QuickBooks, and third-party APIs (Freightcom, OpenAI translations, Chatwoot).',

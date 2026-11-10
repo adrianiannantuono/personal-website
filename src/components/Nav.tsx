@@ -10,7 +10,7 @@ const links = [
   { href: '#projects', label: 'Projects' },
   { href: '#skills', label: 'Skills' },
   { href: '#education', label: 'Education' },
-  { href: '#contact', label: 'Contact' },
+  { href: `mailto:${profile.email}`, label: 'Contact' },
 ]
 
 export function Nav() {

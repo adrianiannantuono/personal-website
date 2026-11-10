@@ -50,7 +50,7 @@ export function Hero() {
                 </a>
               </Button>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="hidden flex-wrap gap-3">
               <Button variant="outline" className="h-11 px-4" asChild>
                 <a href="/resume.pdf" download>
                   <Download className="size-4" />
